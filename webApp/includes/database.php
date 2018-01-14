@@ -5,6 +5,10 @@
  * Date: 12/01/2018
  * Time: 18:58
  */
+try {
+    $dbConnection = new PDO('mysql:dbname=salesPrenotazioni;host=localhost', "root", "", array(PDO::ATTR_PERSISTENT => true));
 
-$dbConnection = new PDO("mysql:dbname=salesPrenotazioni;host=localhost", "root");
-//TODO: check for actual connection to the DB, in case of error, die.
+} catch (PDOException $e) {
+    print "Errore!: " . $e->getMessage() . "<br/>";
+    die();
+}
