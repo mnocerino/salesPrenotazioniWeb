@@ -6,16 +6,11 @@
  * Time: 10:54
  */
 
+require_once 'database.php';
 
 function isUserLoggedIn()
 {
-    try {
-        $dbConnection = new PDO('mysql:dbname=salesPrenotazioni;host=localhost', "root", "", array(PDO::ATTR_PERSISTENT => true));
-
-    } catch (PDOException $e) {
-        print "Errore!: " . $e->getMessage() . "<br/>";
-        die();
-    }
+    $dbConnection = dbConnect();
     $sessionId = session_id();
     $query = "SELECT * from sessions WHERE sessionId = '$sessionId' LIMIT 1;";
     $rows = $dbConnection->query($query);
@@ -27,9 +22,71 @@ function isUserLoggedIn()
 
 }
 
+function getUserName()
+{
+    $dbConnection = dbConnect();
+    $sessionId = session_id();
+    $query = "SELECT name from users WHERE userId = (SELECT userId from sessions WHERE sessionId = '$sessionId') LIMIT 1;";
+
+    $rows = $dbConnection->query($query);
+    if ($rows->rowCount() > 0) {
+        foreach ($rows as $row) {
+            return $row['name'];
+        }
+    } else return "";
+
+}
+
+function getUserIdFromSession()
+{
+    $dbConnection = dbConnect();
+    $sessionId = session_id();
+    $query = "SELECT userId from users WHERE userId = (SELECT userId from sessions WHERE sessionId = '$sessionId') LIMIT 1;";
+
+    $rows = $dbConnection->query($query);
+    if ($rows->rowCount() > 0) {
+        foreach ($rows as $row) {
+            return $row['userId'];
+        }
+    } else return "";
+}
+
+function getUserIdFromMail($mail)
+{
+    $dbConnection = dbConnect();
+    $query = "SELECT userId from users WHERE mail = '$mail' LIMIT 1;";
+
+    $rows = $dbConnection->query($query);
+    if ($rows->rowCount() > 0) {
+        foreach ($rows as $row) {
+            return $row['userId'];
+        }
+    } else return "";
+}
 
 
+function checkPassword($mail, $password)
+{
+    $dbConnection = dbConnect();
+    $query = "SELECT password FROM users WHERE mail = '$mail' LIMIT 1";
+    $rows = $dbConnection->query($query);
+    $passwordHashed = hash('sha1', $password);
+    if ($rows->rowCount() > 0) {
+        foreach ($rows as $row) {
+            if ($passwordHashed == $row['password']) {
+                return 1;
+            }
+        }
+    }
+    return false;
+}
 
-//TODO: create other functions to use, let them return true or false values instead of printing something.
-//TODO: complete the isUserLoggedIn() function to return if the user is currently logged in.
-//TODO: create a function to return the userId from the session table and use it to manage permissions while booking rooms
+function checkIfUserExists($mail)
+{
+    $dbConnection = dbConnect();
+    $query = "SELECT userId FROM users WHERE mail = '$mail' LIMIT 1";
+    $rows = $dbConnection->query($query);
+    if ($rows->rowCount() > 0) {
+        return true;
+    } else return false;
+}

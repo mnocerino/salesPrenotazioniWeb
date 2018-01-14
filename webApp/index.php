@@ -35,9 +35,51 @@ session_start();
         <div class="col-12">
             <?php
             if (!isUserLoggedIn()) :?>
-                <a href="login.php">
-                    <button class="btn btn-info">Login richiesto</button>
-                </a>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    Login richiesto
+                </button>
+
+                <!-- Modal -->
+                <form action="login.php" method="post">
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modulo di login</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Inserisci i tuoi dati per continuare
+                                    <div class="form-group">
+                                        <label for="mail">Indirizzo mail </label>
+                                        <input type="email" class="form-control" name="mail"
+                                               placeholder="Inserisci la mail">
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <input type="password" class="form-control" name="password"
+                                               placeholder="Password">
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+                                    <button class="btn btn-primary" type="submit">Login</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            <?php
+            else :
+                ?>
+                <h3>Benvenuto/a, <?php print getUserName(); ?>!</h3>
+                <p>Effettua il <a href="logout.php">logout.</a></p>
             <?php
             endif;
             ?>

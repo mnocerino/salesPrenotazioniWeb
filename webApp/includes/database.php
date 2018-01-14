@@ -12,3 +12,16 @@ try {
     print "Errore!: " . $e->getMessage() . "<br/>";
     die();
 }
+
+
+function dbConnect()
+{
+    try {
+        $dbConnection = new PDO('mysql:dbname=salesPrenotazioni;host=localhost', "root", "", array(PDO::ATTR_PERSISTENT => true));
+
+    } catch (PDOException $e) {
+        print "Errore!: " . $e->getMessage() . "<br/>";
+        die();
+    }
+    return $dbConnection;
+}
