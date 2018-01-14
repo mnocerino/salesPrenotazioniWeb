@@ -90,3 +90,18 @@ function checkIfUserExists($mail)
         return true;
     } else return false;
 }
+
+function isUserActive($userId)
+{
+    $dbConnection = dbConnect();
+    $query = "SELECT status FROM USERS WHERE userId= '$userId'";
+    $rows = $dbConnection->query($query);
+    if ($rows->rowCount() > 0) {
+        foreach ($rows as $row) {
+            if (1 == $row['status']) {
+                return true;
+            }
+        }
+    }
+    return false;
+}

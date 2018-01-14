@@ -26,11 +26,19 @@ if (isUserLoggedIn()) {
         header('Location: index.php?error=wrongPassword');
         die();
     }
+
     //DELETE OLD SESSION IF EXISTS
     $userId = getUserIdFromMail($mail);
+    if (!isUserActive($userId)) {
+        header('Location: index.php?error=userDeactivated');
+        die();
+    }
     $query = "DELETE FROM sessions WHERE userId='$userId'";
     $end = date('Y-m-d H:i:s', time() + 60 * 60);
     $query = "INSERT INTO sessions (sessionId,userId,end) VALUES ('$sessionId','$userId','$end')";
+    $rows = $dbConnection->query($query);
+    $now = date('Y-m-d H:i:s', time());
+    $query = "UPDATE users SET lastLogin = '$now' WHERE userId='$userId'";
     $rows = $dbConnection->query($query);
     header('Location: index.php');
 } else echo 'something missing.';
