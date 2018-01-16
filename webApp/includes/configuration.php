@@ -8,3 +8,4 @@
 $siteName = "Prenotazioni Sales";
 $install_dir = "/salesPrenotazioniWeb/webApp/";
 $offlineMode = 0;
+$hoursLimitForRoomDeletion = 24;

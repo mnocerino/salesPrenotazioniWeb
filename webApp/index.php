@@ -22,8 +22,11 @@ session_start();
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12">
-            <h1>Sales - Prenotazione Online Studi</h1>
+        <div class="col-2">
+            <img src="images/salesGIF.gif" alt="Logo dello Studio Sales" width="100%">
+        </div>
+        <div class="col-10">
+            <h1 class="display-4">Sales - Prenotazione Online Studi</h1>
         </div>
     </div>
     <div class="row">
@@ -32,7 +35,8 @@ session_start();
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
+        <div class="col-3"></div>
+        <div class="col-6">
             <?php
             if (!isUserLoggedIn()) :?>
                 <!-- Button trigger modal -->
@@ -84,6 +88,7 @@ session_start();
             endif;
             ?>
         </div>
+        <div class="col-3"></div>
     </div>
 </div>
 </body>

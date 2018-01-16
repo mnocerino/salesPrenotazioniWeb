@@ -11,14 +11,14 @@
 <head>
     <title>Prenotazione studi Sales</title>
     <?php
-    require_once 'includes/includes.php';
+    require_once '../includes/includes.php';
     ?>
 </head>
 <body>
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
-            <h1>Sales - Prenotazione Online Studi</h1>
+            <h1 class="display-1">Sales - Prenotazione Online Studi</h1>
         </div>
     </div>
 </div>
