@@ -7,6 +7,7 @@
  */
 require_once 'includes/database.php';
 require_once 'includes/userMethods.php';
+require_once 'includes/booking.php';
 session_start();
 if (!isUserLoggedIn()) {
     header('Location: index.php');
@@ -55,6 +56,13 @@ if (!isUserLoggedIn()) {
             <a href="logout.php">
                 <button class="btn btn-danger">Esci</button>
             </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <p>
+
+            </p>
         </div>
     </div>
 

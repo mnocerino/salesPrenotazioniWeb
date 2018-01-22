@@ -16,11 +16,22 @@ function newBooking($userId, $roomId, $start, $end)
 
 function deleteBooking($bookingId)
 {
-
+    if (!checkIfUserCanDelete($bookingId)) {
+        header('Location: error.php?error=cannotDelete');
+        die;
+    } else {
+        $dbConnection = dbConnect();
+        $query = "DELETE from bookings WHERE bookingId='$bookingId'";
+        $rows = $dbConnection->query($query);
+    }
 }
 
+//TODO: make checkIfUserCanDelete() actually work!
 function checkIfUserCanDelete($bookingId)
 {
+    if (isUserAdmin(getUserIdFromSession())) {
+        return true;
+    }
     $dbConnection = dbConnect();
     $query = "SELECT * from bookings WHERE bookingId = '$bookingId' LIMIT 1;";
     $rows = $dbConnection->query($query);

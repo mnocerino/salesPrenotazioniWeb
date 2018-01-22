@@ -105,3 +105,13 @@ function isUserActive($userId)
     }
     return false;
 }
+
+function isUserAdmin($userId)
+{
+    $dbConnection = dbConnect();
+    $query = "SELECT * FROM administrators WHERE userId= '$userId'";
+    $rows = $dbConnection->query($query);
+    if ($rows->rowCount() > 0) {
+        return true;
+    } else return false;
+}
