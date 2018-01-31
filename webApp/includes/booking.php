@@ -9,9 +9,36 @@ require_once 'database.php';
 require_once 'userMethods.php';
 require_once 'configuration.php';
 
-function newBooking($userId, $roomId, $start, $end)
+function newBooking($userId, $start, $end, $roomId)
 {
-    //TODO: write the function to make a newBooking.
+    $maximumBookingDate = strtotime('now +10 days');
+    $requestedBooking = strtotime($start);
+    $endBooking = strtotime($end);
+    if ($endBooking <= $requestedBooking) {
+        header('Location: newBooking.php?error=endBeforeStart');
+        die();
+    }
+    if ($requestedBooking > $requestedBooking) {
+        header('Location: newBooking.php?error=moreThan10Days');
+        die();
+    }
+    //Check if room is booked in those hours
+    $query = "SELECT * from bookings WHERE roomId= $roomId AND start BETWEEN '$start' and '$end' AND end BETWEEN '$start' and '$end'";
+    $dbConnection = dbConnect();
+    $rows = $dbConnection->query($query);
+    if ($rows->rowCount() > 0) {
+        header('Location: newBooking.php?error=alreadyBooked');
+        die();
+    } else {
+        $query = "INSERT INTO bookings  VALUES (NULL, '$roomId', '$userId', '1', '$start', '$end')";
+        $rows = $dbConnection->query($query);
+        $query = "SELECT bookingId from bookings WHERE userid='$userId' AND roomId = '$roomId' AND start = '$start' AND end = '$end' LIMIT 1";
+        echo $query;
+        $rows2 = $dbConnection->query($query);
+        foreach ($rows2 as $row) {
+            return $row['bookingId'];
+        }
+    }
 }
 
 function deleteBooking($bookingId)
@@ -56,3 +83,5 @@ function checkIfUserCanDelete($bookingId)
     }
     return false;
 }
+
+

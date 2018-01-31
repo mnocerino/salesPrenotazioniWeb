@@ -9,9 +9,10 @@
         <a href="newReservation.php">
             <button class="btn btn-primary">Nuova prenotazione</button>
         </a>
-        <a href="myStatus.php">
-            <button class="btn btn-primary">Resoconto</button>
-        </a>
+        <!-- <a href="myStatus.php">
+             <button class="btn btn-primary">Resoconto</button>
+         </a>
+         -->
         <a href="myAccount.php">
             <button class="btn btn-primary">Il mio account</button>
         </a>

@@ -92,7 +92,8 @@ if (!isUserLoggedIn()) {
                 <tbody>
                 <tr>
                     <td>
-                        <a href="./newReservation.php?date=<?php echo $dt->format('Y-m-d') ?>">Lunedì <?php echo $dt->format('d-m-Y') ?></a>
+                        <a href="./newReservation.php?date=<?php echo $dt->format('Y-m-d') ?>">Lunedì<br> <?php echo $dt->format('d-m-Y') ?>
+                        </a>
                     </td>
 
                     <?php
@@ -104,7 +105,7 @@ if (!isUserLoggedIn()) {
                         echo "<td>";
                         $inizio = date('H:i', (strtotime($row['start'])));
                         $fine = date('H:i', (strtotime($row['end'])));
-                        echo getUserCompleteNameFromID($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
+                        echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
                         echo "</td>";
                     }
                     ?>
@@ -113,7 +114,7 @@ if (!isUserLoggedIn()) {
                 <tr>
                     <td>
                         <a href="./newReservation.php?date=<?php $dt->modify('+1 day');
-                        echo $dt->format('Y-m-d') ?>">Martedì <?php echo $dt->format('d-m-Y') ?></a>
+                        echo $dt->format('Y-m-d') ?>">Martedì<br> <?php echo $dt->format('d-m-Y') ?></a>
                     </td>
                     <?php
                     $startTime = $dt->format('Y-m-d' . " 00:00:00");
@@ -124,7 +125,7 @@ if (!isUserLoggedIn()) {
                         echo "<td>";
                         $inizio = date('H:i', (strtotime($row['start'])));
                         $fine = date('H:i', (strtotime($row['end'])));
-                        echo getUserCompleteNameFromID($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
+                        echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
                         echo "</td>";
                     }
                     ?>
@@ -132,7 +133,7 @@ if (!isUserLoggedIn()) {
                 <tr>
                     <td>
                         <a href="./newReservation.php?date=<?php $dt->modify('+1 day');
-                        echo $dt->format('Y-m-d') ?>">Mercoledì <?php echo $dt->format('d-m-Y') ?></a>
+                        echo $dt->format('Y-m-d') ?>">Mercoledì<br> <?php echo $dt->format('d-m-Y') ?></a>
                     </td>
                     <?php
                     $startTime = $dt->format('Y-m-d' . " 00:00:00");
@@ -143,7 +144,7 @@ if (!isUserLoggedIn()) {
                         echo "<td>";
                         $inizio = date('H:i', (strtotime($row['start'])));
                         $fine = date('H:i', (strtotime($row['end'])));
-                        echo getUserCompleteNameFromID($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
+                        echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
                         echo "</td>";
                     }
                     ?>
@@ -151,7 +152,7 @@ if (!isUserLoggedIn()) {
                 <tr>
                     <td>
                         <a href="./newReservation.php?date=<?php $dt->modify('+1 day');
-                        echo $dt->format('Y-m-d') ?>">Giovedì <?php echo $dt->format('d-m-Y') ?></a>
+                        echo $dt->format('Y-m-d') ?>">Giovedì<br> <?php echo $dt->format('d-m-Y') ?></a>
                     </td>
                     <?php
                     $startTime = $dt->format('Y-m-d' . " 00:00:00");
@@ -162,7 +163,7 @@ if (!isUserLoggedIn()) {
                         echo "<td>";
                         $inizio = date('H:i', (strtotime($row['start'])));
                         $fine = date('H:i', (strtotime($row['end'])));
-                        echo getUserCompleteNameFromID($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
+                        echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
                         echo "</td>";
                     }
                     ?>
@@ -170,7 +171,7 @@ if (!isUserLoggedIn()) {
                 <tr>
                     <td>
                         <a href="./newReservation.php?date=<?php $dt->modify('+1 day');
-                        echo $dt->format('Y-m-d') ?>">Venerdì <?php echo $dt->format('d-m-Y') ?></a>
+                        echo $dt->format('Y-m-d') ?>">Venerdì <br><?php echo $dt->format('d-m-Y') ?></a>
                     </td>
                     <?php
                     $startTime = $dt->format('Y-m-d' . " 00:00:00");
@@ -181,7 +182,7 @@ if (!isUserLoggedIn()) {
                         echo "<td>";
                         $inizio = date('H:i', (strtotime($row['start'])));
                         $fine = date('H:i', (strtotime($row['end'])));
-                        echo getUserCompleteNameFromID($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
+                        echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
                         echo "</td>";
                     }
                     ?>
@@ -189,7 +190,7 @@ if (!isUserLoggedIn()) {
                 <tr>
                     <td>
                         <a href="./newReservation.php?date=<?php $dt->modify('+1 day');
-                        echo $dt->format('Y-m-d') ?>">Sabato <?php echo $dt->format('d-m-Y') ?></a>
+                        echo $dt->format('Y-m-d') ?>">Sabato <br><?php echo $dt->format('d-m-Y') ?></a>
                     </td>
                     <?php
                     $startTime = $dt->format('Y-m-d' . " 00:00:00");
@@ -200,7 +201,7 @@ if (!isUserLoggedIn()) {
                         echo "<td>";
                         $inizio = date('H:i', (strtotime($row['start'])));
                         $fine = date('H:i', (strtotime($row['end'])));
-                        echo getUserCompleteNameFromID($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
+                        echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
                         echo "</td>";
                     }
                     ?>
@@ -208,7 +209,7 @@ if (!isUserLoggedIn()) {
                 <tr>
                     <td>
                         <a href="./newReservation.php?date=<?php $dt->modify('+1 day');
-                        echo $dt->format('Y-m-d') ?>">Domenica <?php echo $dt->format('d-m-Y') ?></a>
+                        echo $dt->format('Y-m-d') ?>">Domenica <br><?php echo $dt->format('d-m-Y') ?></a>
                     </td>
                     <?php
                     $startTime = $dt->format('Y-m-d' . " 00:00:00");
@@ -219,7 +220,7 @@ if (!isUserLoggedIn()) {
                         echo "<td>";
                         $inizio = date('H:i', (strtotime($row['start'])));
                         $fine = date('H:i', (strtotime($row['end'])));
-                        echo getUserCompleteNameFromID($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
+                        echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
                         echo "</td>";
                     }
                     ?>

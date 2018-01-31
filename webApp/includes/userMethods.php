@@ -22,11 +22,11 @@ function isUserLoggedIn()
 
 }
 
-function getUserName()
+function getUserName($userId)
 {
     $dbConnection = dbConnect();
     $sessionId = session_id();
-    $query = "SELECT name from users WHERE userId = (SELECT userId from sessions WHERE sessionId = '$sessionId') LIMIT 1;";
+    $query = "SELECT name from users WHERE userId = (SELECT userId from sessions WHERE userId = '$userId') LIMIT 1;";
 
     $rows = $dbConnection->query($query);
     if ($rows->rowCount() > 0) {
@@ -37,11 +37,11 @@ function getUserName()
 
 }
 
-function getUserCompleteName()
+function getUserCompleteName($userId)
 {
     $dbConnection = dbConnect();
     $sessionId = session_id();
-    $query = "SELECT name,surname from users WHERE userId = (SELECT userId from sessions WHERE sessionId = '$sessionId') LIMIT 1;";
+    $query = "SELECT name,surname from users WHERE userId = (SELECT userId from sessions WHERE userId = '$userId') LIMIT 1;";
 
     $rows = $dbConnection->query($query);
     if ($rows->rowCount() > 0) {
@@ -52,26 +52,12 @@ function getUserCompleteName()
 
 }
 
-function getUserCompleteNameFromID($userId)
+
+function getUserSurname($userId)
 {
     $dbConnection = dbConnect();
     $sessionId = session_id();
-    $query = "SELECT name,surname from users WHERE userId = '$userId' LIMIT 1;";
-
-    $rows = $dbConnection->query($query);
-    if ($rows->rowCount() > 0) {
-        foreach ($rows as $row) {
-            return $row['name'] . " " . $row['surname'];
-        }
-    } else return "";
-
-}
-
-function getUserSurname()
-{
-    $dbConnection = dbConnect();
-    $sessionId = session_id();
-    $query = "SELECT surname from users WHERE userId = (SELECT userId from sessions WHERE sessionId = '$sessionId') LIMIT 1;";
+    $query = "SELECT surname from users WHERE userId = (SELECT userId from sessions WHERE userId = '$userId') LIMIT 1;";
 
     $rows = $dbConnection->query($query);
     if ($rows->rowCount() > 0) {
@@ -160,10 +146,9 @@ function isUserAdmin($userId)
     } else return false;
 }
 
-function getUserAllowance()
+function getUserAllowance($userId)
 {
     $dbConnection = dbConnect();
-    $userId = getUserIdFromSession();
     $query = "SELECT allowance FROM users WHERE userId='$userId'";
     $rows = $dbConnection->query($query);
     if ($rows->rowCount() > 0) {
@@ -173,10 +158,9 @@ function getUserAllowance()
     }
 }
 
-function getUserRate()
+function getUserRate($userId)
 {
     $dbConnection = dbConnect();
-    $userId = getUserIdFromSession();
     $query = "SELECT rate FROM users WHERE userId='$userId'";
     $rows = $dbConnection->query($query);
     if ($rows->rowCount() > 0) {
@@ -184,4 +168,45 @@ function getUserRate()
             return $row['rate'];
         }
     }
+}
+
+function calculateUsedHours($userId, $month)
+{
+    $startDate = date('Y-m-01 00:00:00');
+    $endDate = date('Y-m-t 00:00:00', strtotime($month));
+
+    $dbConnection = dbConnect();
+    $query = "SELECT * FROM bookings where userId='$userId' and start BETWEEN '$startDate' AND '$endDate'";
+    $rows = $dbConnection->query($query);
+    $usedSeconds = 0;
+    foreach ($rows as $row) {
+
+        $date1 = new DateTime($row['start']);
+        $date2 = new DateTime($row['end']);
+        $diffInSeconds = $date2->getTimestamp() - $date1->getTimestamp();
+        $usedSeconds = $usedSeconds + $diffInSeconds;
+    }
+    return $usedSeconds;
+}
+
+function calculateRemainingSeconds($userId, $monthDate)
+{
+    $startDate = date("Y-m-01 00:00:00", strtotime($monthDate));
+    $used = calculateUsedHours($userId, $startDate);
+    $allowance = getUserAllowance($userId) * 3600;
+    $remaining = $allowance - $used;
+    return $remaining;
+}
+
+function secToHR($seconds)
+{
+    $hours = floor($seconds / 3600);
+    $minutes = floor(($seconds / 60) % 60);
+    return $hours . " ore e " . $minutes . " minuti";
+}
+
+function getReadableRemainingTime($userId, $monthDate)
+{
+    return secToHR(calculateRemainingSeconds($userId, $monthDate));
+    //eturn gmdate("H:i", calculateRemainingSeconds($userId,$monthDate));
 }

@@ -40,9 +40,12 @@ if (!isUserLoggedIn()) {
     <div class="row">
         <div class="col-12 text-center">
             <br>
-            <h3>Utente: <?php echo getUserCompleteName(); ?></h3> <br>
-            Ore disponibili da contratto: <?php echo getUserAllowance(); ?><br>
-            Costo orario: <?php echo getUserRate() . "\xE2\x82\xAc"; ?>
+            <h3>Utente: <?php echo getUserCompleteName(getUserIdFromSession()); ?></h3> <br>
+            Ore disponibili da contratto: <?php echo getUserAllowance(getUserIdFromSession()); ?><br>
+            Costo orario: <?php echo getUserRate(getUserIdFromSession()) . "\xE2\x82\xAc"; ?><br>
+            Tempo rimanente per il mese in
+            corso: <?php echo getReadableRemainingTime(getUserIdFromSession(), date('Y-m-d', strtotime('now'))); ?>
+
         </div>
     </div>
 
