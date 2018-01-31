@@ -8,8 +8,12 @@
 require_once 'includes/database.php';
 require_once 'includes/userMethods.php';
 session_start();
-
+if (isUserLoggedIn()) {
+    header('Location: indexLogged.php');
+    die();
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="it">
@@ -37,8 +41,6 @@ session_start();
     <div class="row">
         <div class="col-3"></div>
         <div class="col-6">
-            <?php
-            if (!isUserLoggedIn()) :?>
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                     Login richiesto
@@ -79,14 +81,6 @@ session_start();
                         </div>
                     </div>
                 </form>
-            <?php
-            else :
-                ?>
-                <h3>Benvenuto/a, <?php print getUserName(); ?>!</h3>
-                <p>Effettua il <a href="logout.php">logout.</a></p>
-            <?php
-            endif;
-            ?>
         </div>
         <div class="col-3"></div>
     </div>

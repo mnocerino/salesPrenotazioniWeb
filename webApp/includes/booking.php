@@ -11,33 +11,45 @@ require_once 'configuration.php';
 
 function newBooking($userId, $roomId, $start, $end)
 {
-
+    //TODO: write the function to make a newBooking.
 }
 
 function deleteBooking($bookingId)
 {
     if (!checkIfUserCanDelete($bookingId)) {
-        header('Location: error.php?error=cannotDelete');
+        //header('Location: error.php?error=cannotDelete');
+        echo "non puoi cancellare";
         die;
     } else {
         $dbConnection = dbConnect();
-        $query = "DELETE from bookings WHERE bookingId='$bookingId'";
+        $query = "UPDATE bookings SET status='2' WHERE bookingId='$bookingId'";
         $rows = $dbConnection->query($query);
     }
 }
 
-//TODO: make checkIfUserCanDelete() actually work!
+//TODO: make this function actually work, dumbass.
 function checkIfUserCanDelete($bookingId)
 {
     if (isUserAdmin(getUserIdFromSession())) {
         return true;
     }
+    $startTime = null;
     $dbConnection = dbConnect();
-    $query = "SELECT * from bookings WHERE bookingId = '$bookingId' LIMIT 1;";
+    $query = "SELECT start from bookings where bookindId='$bookingId' LIMIT 1;";
     $rows = $dbConnection->query($query);
     if ($rows->rowCount() > 0) {
         foreach ($rows as $row) {
-            if ($row['start'] >= date('Y-m-d H:i:s', time() - 24 * 60 * 60)) {
+            $startTime = $row['start'];
+        }
+    }
+    $query = "SELECT * from bookings WHERE bookingId = '$bookingId' LIMIT 1;";
+    $rows2 = $dbConnection->query($query);
+    if ($rows2->rowCount() > 0) {
+        echo "sono entrato nel ciclo";
+        foreach ($rows as $row) {
+            echo "Data massima per cancellazione: " . (strtotime($startTime)) . " - maggiore di ora: " . strtotime($startTime);
+            echo "Data massima per cancellazione: " . date('Y-m-d H:i:s', (strtotime($minimumDate))) . " - maggiore di ora: " . date('Y-m-d H:i:s', (strtotime($startTime)));
+            if (strtotime($minimumDate) > strtotime('now')) {
                 return true;
             }
         }

@@ -37,6 +37,50 @@ function getUserName()
 
 }
 
+function getUserCompleteName()
+{
+    $dbConnection = dbConnect();
+    $sessionId = session_id();
+    $query = "SELECT name,surname from users WHERE userId = (SELECT userId from sessions WHERE sessionId = '$sessionId') LIMIT 1;";
+
+    $rows = $dbConnection->query($query);
+    if ($rows->rowCount() > 0) {
+        foreach ($rows as $row) {
+            return $row['name'] . " " . $row['surname'];
+        }
+    } else return "";
+
+}
+
+function getUserCompleteNameFromID($userId)
+{
+    $dbConnection = dbConnect();
+    $sessionId = session_id();
+    $query = "SELECT name,surname from users WHERE userId = '$userId' LIMIT 1;";
+
+    $rows = $dbConnection->query($query);
+    if ($rows->rowCount() > 0) {
+        foreach ($rows as $row) {
+            return $row['name'] . " " . $row['surname'];
+        }
+    } else return "";
+
+}
+
+function getUserSurname()
+{
+    $dbConnection = dbConnect();
+    $sessionId = session_id();
+    $query = "SELECT surname from users WHERE userId = (SELECT userId from sessions WHERE sessionId = '$sessionId') LIMIT 1;";
+
+    $rows = $dbConnection->query($query);
+    if ($rows->rowCount() > 0) {
+        foreach ($rows as $row) {
+            return $row['surname'];
+        }
+    } else return "";
+
+}
 function getUserIdFromSession()
 {
     $dbConnection = dbConnect();
@@ -114,4 +158,30 @@ function isUserAdmin($userId)
     if ($rows->rowCount() > 0) {
         return true;
     } else return false;
+}
+
+function getUserAllowance()
+{
+    $dbConnection = dbConnect();
+    $userId = getUserIdFromSession();
+    $query = "SELECT allowance FROM users WHERE userId='$userId'";
+    $rows = $dbConnection->query($query);
+    if ($rows->rowCount() > 0) {
+        foreach ($rows as $row) {
+            return $row['allowance'];
+        }
+    }
+}
+
+function getUserRate()
+{
+    $dbConnection = dbConnect();
+    $userId = getUserIdFromSession();
+    $query = "SELECT rate FROM users WHERE userId='$userId'";
+    $rows = $dbConnection->query($query);
+    if ($rows->rowCount() > 0) {
+        foreach ($rows as $row) {
+            return $row['rate'];
+        }
+    }
 }
