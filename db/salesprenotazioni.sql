@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Gen 16, 2018 alle 15:39
+-- Creato il: Gen 31, 2018 alle 18:50
 -- Versione del server: 10.1.28-MariaDB
 -- Versione PHP: 7.1.11
 
@@ -47,6 +47,13 @@ CREATE TABLE `bookings` (
   `end` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dump dei dati per la tabella `bookings`
+--
+
+INSERT INTO `bookings` (`bookingId`, `roomId`, `userId`, `status`, `start`, `end`) VALUES
+(16, 1, 1, 1, '2018-01-24 09:15:00', '2018-01-24 12:00:00');
+
 -- --------------------------------------------------------
 
 --
@@ -86,7 +93,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`sessionId`, `userId`, `start`, `end`) VALUES
-('mk9qmln76fgesv3ag2kspdrrso', 1, '2018-01-16 13:37:00', '2018-01-16 14:37:00');
+('tv1e0cj4mfsgjb4ffuk5od34kk', 1, '2018-01-31 11:08:45', '2018-01-31 12:08:45');
 
 -- --------------------------------------------------------
 
@@ -101,15 +108,17 @@ CREATE TABLE `users` (
   `mail` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `status` int(1) NOT NULL DEFAULT '1',
-  `lastLogin` datetime DEFAULT NULL
+  `lastLogin` datetime DEFAULT NULL,
+  `rate` float NOT NULL,
+  `allowance` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dump dei dati per la tabella `users`
 --
 
-INSERT INTO `users` (`userId`, `name`, `surname`, `mail`, `password`, `status`, `lastLogin`) VALUES
-(1, 'Mattia', 'Nocerino', 'mnocerino@gmail.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 1, '2018-01-16 14:37:00');
+INSERT INTO `users` (`userId`, `name`, `surname`, `mail`, `password`, `status`, `lastLogin`, `rate`, `allowance`) VALUES
+(1, 'Mattia', 'Nocerino', 'mnocerino@gmail.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 1, '2018-01-31 12:08:45', 11.48, 30);
 
 --
 -- Indici per le tabelle scaricate
@@ -157,7 +166,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT per la tabella `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `bookingId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `bookingId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT per la tabella `rooms`
