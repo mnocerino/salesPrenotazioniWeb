@@ -26,11 +26,8 @@ if (isUserLoggedIn()) {
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-2">
-            <img src="images/salesGIF.gif" alt="Logo dello Studio Sales" width="100%">
-        </div>
         <div class="col-10">
-            <h1 class="display-4">Sales - Prenotazione Online Studi</h1>
+            <h1 class="display-3">Studio Associato di Psicologia Rebaudengo</h1>
         </div>
     </div>
     <div class="row">
@@ -42,14 +39,14 @@ if (isUserLoggedIn()) {
         <div class="col-3"></div>
         <div class="col-6">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#moduloLogin">
                     Login richiesto
                 </button>
 
                 <!-- Modal -->
                 <form action="login.php" method="post">
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="moduloLogin" tabindex="-1" role="dialog"
+                         aria-labelledby="moduloLogin" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">

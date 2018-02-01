@@ -208,5 +208,4 @@ function secToHR($seconds)
 function getReadableRemainingTime($userId, $monthDate)
 {
     return secToHR(calculateRemainingSeconds($userId, $monthDate));
-    //eturn gmdate("H:i", calculateRemainingSeconds($userId,$monthDate));
 }

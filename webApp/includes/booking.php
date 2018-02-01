@@ -18,7 +18,7 @@ function newBooking($userId, $start, $end, $roomId)
         header('Location: newBooking.php?error=endBeforeStart');
         die();
     }
-    if ($requestedBooking > $requestedBooking) {
+    if ($requestedBooking > $maximumBookingDate) {
         header('Location: newBooking.php?error=moreThan10Days');
         die();
     }
