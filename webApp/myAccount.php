@@ -28,11 +28,8 @@ if (!isUserLoggedIn()) {
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-2">
-            <img src="images/salesGIF.gif" alt="Logo dello Studio Sales" width="100%">
-        </div>
         <div class="col-10">
-            <h1 class="display-4">Sales - Prenotazione Online Studi</h1>
+            <h1 class="display-4">Prenotazione sale</h1>
         </div>
     </div>
     <div class="row"><br></div>

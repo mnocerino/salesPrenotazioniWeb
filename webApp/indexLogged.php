@@ -9,6 +9,7 @@ setlocale(LC_TIME, 'it_IT');
 require_once 'includes/database.php';
 require_once 'includes/userMethods.php';
 require_once 'includes/booking.php';
+$rooms = showRooms();
 session_start();
 if (!isUserLoggedIn()) {
     header('Location: index.php');
@@ -29,7 +30,7 @@ if (!isUserLoggedIn()) {
 <div class="container-fluid">
     <div class="row">
         <div class="col-10">
-            <h1 class="display-3">Studio Associato di Psicologia Rebaudengo</h1>
+            <h1 class="display-4">Prenotazione sale</h1>
         </div>
     </div>
     <div class="row"><br></div>
@@ -78,10 +79,10 @@ if (!isUserLoggedIn()) {
             <table class="table table-striped table-bordered  text-center">
                 <thead>
                 <tr>
-                    <td>
+                    <td width="200px">
                         Giorno
                     </td>
-                    <td>
+                    <td colspan="200">
                         Prenotazioni
                     </td>
                 </tr>
@@ -92,21 +93,24 @@ if (!isUserLoggedIn()) {
                         <a href="./newReservation.php?date=<?php echo $dt->format('Y-m-d') ?>">Lunedì<br> <?php echo $dt->format('d-m-Y') ?>
                         </a>
                     </td>
-
                     <?php
-                    $startTime = $dt->format('Y-m-d' . " 00:00:00");
-                    $endTime = $dt->format('Y-m-d') . " 23:59:59";
-                    $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' ORDER BY start";
-                    $rows = $dbConnection->query($query);
-                    foreach ($rows as $row) {
-                        echo "<td>";
-                        $inizio = date('H:i', (strtotime($row['start'])));
-                        $fine = date('H:i', (strtotime($row['end'])));
-                        echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
-                        echo "</td>";
-                    }
-                    ?>
-
+                    foreach ($rooms as $room) {
+                        $roomId = $room['roomId'];
+                        $roomName = $room['roomName'];
+                        echo "<tr><td class='text-right'>$roomName</td>";
+                        $startTime = $dt->format('Y-m-d' . " 00:00:00");
+                        $endTime = $dt->format('Y-m-d') . " 23:59:59";
+                        $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' and roomId='$roomId' ORDER BY start";
+                        $rows = $dbConnection->query($query);
+                        foreach ($rows as $row) {
+                            echo "<td>";
+                            $inizio = date('H:i', (strtotime($row['start'])));
+                            $fine = date('H:i', (strtotime($row['end'])));
+                            echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
+                            echo "</td>";
+                        }
+                        echo "</tr>";
+                    } ?>
                 </tr>
                 <tr>
                     <td>
@@ -114,18 +118,25 @@ if (!isUserLoggedIn()) {
                         echo $dt->format('Y-m-d') ?>">Martedì<br> <?php echo $dt->format('d-m-Y') ?></a>
                     </td>
                     <?php
-                    $startTime = $dt->format('Y-m-d' . " 00:00:00");
-                    $endTime = $dt->format('Y-m-d') . " 23:59:59";
-                    $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' ORDER BY start";
-                    $rows = $dbConnection->query($query);
-                    foreach ($rows as $row) {
-                        echo "<td>";
-                        $inizio = date('H:i', (strtotime($row['start'])));
-                        $fine = date('H:i', (strtotime($row['end'])));
-                        echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
-                        echo "</td>";
-                    }
-                    ?>
+                    $rooms = showRooms();
+                    foreach ($rooms as $room) {
+                        $roomId = $room['roomId'];
+                        $roomName = $room['roomName'];
+                        echo "<tr><td class='text-right'>$roomName</td>";
+                        $startTime = $dt->format('Y-m-d' . " 00:00:00");
+                        $endTime = $dt->format('Y-m-d') . " 23:59:59";
+                        $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' and roomId='$roomId' ORDER BY start";
+                        $rows = $dbConnection->query($query);
+                        foreach ($rows as $row) {
+                            echo "<td>";
+                            $inizio = date('H:i', (strtotime($row['start'])));
+                            $fine = date('H:i', (strtotime($row['end'])));
+                            echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
+                            echo "</td>";
+                        }
+                        echo "</tr>";
+                    } ?>
+
                 </tr>
                 <tr>
                     <td>
@@ -133,18 +144,24 @@ if (!isUserLoggedIn()) {
                         echo $dt->format('Y-m-d') ?>">Mercoledì<br> <?php echo $dt->format('d-m-Y') ?></a>
                     </td>
                     <?php
-                    $startTime = $dt->format('Y-m-d' . " 00:00:00");
-                    $endTime = $dt->format('Y-m-d') . " 23:59:59";
-                    $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' ORDER BY start";
-                    $rows = $dbConnection->query($query);
-                    foreach ($rows as $row) {
-                        echo "<td>";
-                        $inizio = date('H:i', (strtotime($row['start'])));
-                        $fine = date('H:i', (strtotime($row['end'])));
-                        echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
-                        echo "</td>";
-                    }
-                    ?>
+                    $rooms = showRooms();
+                    foreach ($rooms as $room) {
+                        $roomId = $room['roomId'];
+                        $roomName = $room['roomName'];
+                        echo "<tr><td class='text-right'>$roomName</td>";
+                        $startTime = $dt->format('Y-m-d' . " 00:00:00");
+                        $endTime = $dt->format('Y-m-d') . " 23:59:59";
+                        $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' and roomId='$roomId' ORDER BY start";
+                        $rows = $dbConnection->query($query);
+                        foreach ($rows as $row) {
+                            echo "<td>";
+                            $inizio = date('H:i', (strtotime($row['start'])));
+                            $fine = date('H:i', (strtotime($row['end'])));
+                            echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
+                            echo "</td>";
+                        }
+                        echo "</tr>";
+                    } ?>
                 </tr>
                 <tr>
                     <td>
@@ -152,18 +169,24 @@ if (!isUserLoggedIn()) {
                         echo $dt->format('Y-m-d') ?>">Giovedì<br> <?php echo $dt->format('d-m-Y') ?></a>
                     </td>
                     <?php
-                    $startTime = $dt->format('Y-m-d' . " 00:00:00");
-                    $endTime = $dt->format('Y-m-d') . " 23:59:59";
-                    $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' ORDER BY start";
-                    $rows = $dbConnection->query($query);
-                    foreach ($rows as $row) {
-                        echo "<td>";
-                        $inizio = date('H:i', (strtotime($row['start'])));
-                        $fine = date('H:i', (strtotime($row['end'])));
-                        echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
-                        echo "</td>";
-                    }
-                    ?>
+                    $rooms = showRooms();
+                    foreach ($rooms as $room) {
+                        $roomId = $room['roomId'];
+                        $roomName = $room['roomName'];
+                        echo "<tr><td class='text-right'>$roomName</td>";
+                        $startTime = $dt->format('Y-m-d' . " 00:00:00");
+                        $endTime = $dt->format('Y-m-d') . " 23:59:59";
+                        $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' and roomId='$roomId' ORDER BY start";
+                        $rows = $dbConnection->query($query);
+                        foreach ($rows as $row) {
+                            echo "<td>";
+                            $inizio = date('H:i', (strtotime($row['start'])));
+                            $fine = date('H:i', (strtotime($row['end'])));
+                            echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
+                            echo "</td>";
+                        }
+                        echo "</tr>";
+                    } ?>
                 </tr>
                 <tr>
                     <td>
@@ -171,18 +194,24 @@ if (!isUserLoggedIn()) {
                         echo $dt->format('Y-m-d') ?>">Venerdì <br><?php echo $dt->format('d-m-Y') ?></a>
                     </td>
                     <?php
-                    $startTime = $dt->format('Y-m-d' . " 00:00:00");
-                    $endTime = $dt->format('Y-m-d') . " 23:59:59";
-                    $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' ORDER BY start";
-                    $rows = $dbConnection->query($query);
-                    foreach ($rows as $row) {
-                        echo "<td>";
-                        $inizio = date('H:i', (strtotime($row['start'])));
-                        $fine = date('H:i', (strtotime($row['end'])));
-                        echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
-                        echo "</td>";
-                    }
-                    ?>
+                    $rooms = showRooms();
+                    foreach ($rooms as $room) {
+                        $roomId = $room['roomId'];
+                        $roomName = $room['roomName'];
+                        echo "<tr><td class='text-right'>$roomName</td>";
+                        $startTime = $dt->format('Y-m-d' . " 00:00:00");
+                        $endTime = $dt->format('Y-m-d') . " 23:59:59";
+                        $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' and roomId='$roomId' ORDER BY start";
+                        $rows = $dbConnection->query($query);
+                        foreach ($rows as $row) {
+                            echo "<td>";
+                            $inizio = date('H:i', (strtotime($row['start'])));
+                            $fine = date('H:i', (strtotime($row['end'])));
+                            echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
+                            echo "</td>";
+                        }
+                        echo "</tr>";
+                    } ?>
                 </tr>
                 <tr>
                     <td>
@@ -190,18 +219,24 @@ if (!isUserLoggedIn()) {
                         echo $dt->format('Y-m-d') ?>">Sabato <br><?php echo $dt->format('d-m-Y') ?></a>
                     </td>
                     <?php
-                    $startTime = $dt->format('Y-m-d' . " 00:00:00");
-                    $endTime = $dt->format('Y-m-d') . " 23:59:59";
-                    $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' ORDER BY start";
-                    $rows = $dbConnection->query($query);
-                    foreach ($rows as $row) {
-                        echo "<td>";
-                        $inizio = date('H:i', (strtotime($row['start'])));
-                        $fine = date('H:i', (strtotime($row['end'])));
-                        echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
-                        echo "</td>";
-                    }
-                    ?>
+                    $rooms = showRooms();
+                    foreach ($rooms as $room) {
+                        $roomId = $room['roomId'];
+                        $roomName = $room['roomName'];
+                        echo "<tr><td class='text-right'>$roomName</td>";
+                        $startTime = $dt->format('Y-m-d' . " 00:00:00");
+                        $endTime = $dt->format('Y-m-d') . " 23:59:59";
+                        $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' and roomId='$roomId' ORDER BY start";
+                        $rows = $dbConnection->query($query);
+                        foreach ($rows as $row) {
+                            echo "<td>";
+                            $inizio = date('H:i', (strtotime($row['start'])));
+                            $fine = date('H:i', (strtotime($row['end'])));
+                            echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
+                            echo "</td>";
+                        }
+                        echo "</tr>";
+                    } ?>
                 </tr>
                 <tr>
                     <td>
@@ -209,18 +244,24 @@ if (!isUserLoggedIn()) {
                         echo $dt->format('Y-m-d') ?>">Domenica <br><?php echo $dt->format('d-m-Y') ?></a>
                     </td>
                     <?php
-                    $startTime = $dt->format('Y-m-d' . " 00:00:00");
-                    $endTime = $dt->format('Y-m-d') . " 23:59:59";
-                    $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' ORDER BY start";
-                    $rows = $dbConnection->query($query);
-                    foreach ($rows as $row) {
-                        echo "<td>";
-                        $inizio = date('H:i', (strtotime($row['start'])));
-                        $fine = date('H:i', (strtotime($row['end'])));
-                        echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
-                        echo "</td>";
-                    }
-                    ?>
+                    $rooms = showRooms();
+                    foreach ($rooms as $room) {
+                        $roomId = $room['roomId'];
+                        $roomName = $room['roomName'];
+                        echo "<tr><td class='text-right'>$roomName</td>";
+                        $startTime = $dt->format('Y-m-d' . " 00:00:00");
+                        $endTime = $dt->format('Y-m-d') . " 23:59:59";
+                        $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' and roomId='$roomId' ORDER BY start";
+                        $rows = $dbConnection->query($query);
+                        foreach ($rows as $row) {
+                            echo "<td>";
+                            $inizio = date('H:i', (strtotime($row['start'])));
+                            $fine = date('H:i', (strtotime($row['end'])));
+                            echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
+                            echo "</td>";
+                        }
+                        echo "</tr>";
+                    } ?>
                 </tr>
                 </tbody>
             </table>

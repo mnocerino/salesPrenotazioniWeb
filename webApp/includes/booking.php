@@ -11,15 +11,23 @@ require_once 'configuration.php';
 
 function newBooking($userId, $start, $end, $roomId)
 {
-    $maximumBookingDate = strtotime('now +10 days');
     $requestedBooking = strtotime($start);
     $endBooking = strtotime($end);
+    $requested = $endBooking - $requestedBooking;
+    $now = strtotime('now');
     if ($endBooking <= $requestedBooking) {
         header('Location: newBooking.php?error=endBeforeStart');
         die();
     }
-    if ($requestedBooking > $maximumBookingDate) {
-        header('Location: newBooking.php?error=moreThan10Days');
+
+    //Check if user has allowance hours
+    if (calculateRemainingSeconds(getUserIdFromSession(), date('Y-m-d', strtotime('now'))) < $requested) {
+        header('Location: newBooking.php?error=notEnoughAllowance');
+        die();
+    }
+    //Check if start date is in the future
+    if ($requestedBooking < $now) {
+        header('Location: newBooking.php?error=startIsInThePast');
         die();
     }
     //Check if room is booked in those hours
@@ -41,20 +49,25 @@ function newBooking($userId, $start, $end, $roomId)
     }
 }
 
+function showRooms()
+{
+    $dbConnection = dbConnect();
+    $query = "SELECT roomId, roomName from rooms";
+    return $dbConnection->query($query);
+}
+
 function deleteBooking($bookingId)
 {
     if (!checkIfUserCanDelete($bookingId)) {
-        //header('Location: error.php?error=cannotDelete');
-        echo "non puoi cancellare";
-        die;
+        return false;
     } else {
         $dbConnection = dbConnect();
         $query = "UPDATE bookings SET status='2' WHERE bookingId='$bookingId'";
         $rows = $dbConnection->query($query);
+        return true;
     }
 }
 
-//TODO: make this function actually work, dumbass.
 function checkIfUserCanDelete($bookingId)
 {
     if (isUserAdmin(getUserIdFromSession())) {
@@ -62,26 +75,50 @@ function checkIfUserCanDelete($bookingId)
     }
     $startTime = null;
     $dbConnection = dbConnect();
-    $query = "SELECT start from bookings where bookindId='$bookingId' LIMIT 1;";
+    $query = "SELECT * from bookings where bookingId='$bookingId' LIMIT 1;";
     $rows = $dbConnection->query($query);
     if ($rows->rowCount() > 0) {
         foreach ($rows as $row) {
             $startTime = $row['start'];
         }
     }
-    $query = "SELECT * from bookings WHERE bookingId = '$bookingId' LIMIT 1;";
-    $rows2 = $dbConnection->query($query);
-    if ($rows2->rowCount() > 0) {
-        echo "sono entrato nel ciclo";
-        foreach ($rows as $row) {
-            echo "Data massima per cancellazione: " . (strtotime($startTime)) . " - maggiore di ora: " . strtotime($startTime);
-            echo "Data massima per cancellazione: " . date('Y-m-d H:i:s', (strtotime($minimumDate))) . " - maggiore di ora: " . date('Y-m-d H:i:s', (strtotime($startTime)));
-            if (strtotime($minimumDate) > strtotime('now')) {
-                return true;
-            }
-        }
+    $startTime = strtotime($startTime);
+    $minimumDate = strtotime('-2 days', $startTime);
+    if ($minimumDate > strtotime('now')) {
+        return true;
     }
     return false;
 }
 
+function getBookingInfo($bookingId)
+{
+    $dbConnection = dbConnect();
+    $query = "SELECT * FROM bookings WHERE bookingId='$bookingId'";
+    $rows = $dbConnection->query($query);
+    if ($rows->rowCount() > 0) return $rows;
+    else return null;
+}
 
+function getRoomName($roomId)
+{
+    $dbConnection = dbConnect();
+    $query = "SELECT roomName from rooms WHERE roomId=$roomId";
+    $rows = $dbConnection->query($query);
+    if ($rows->rowCount() > 0) {
+        foreach ($rows as $row) {
+            return $row['roomName'];
+        }
+    } else return null;
+}
+
+function getUserBookings($userId, $month)
+{
+    $startDate = date('Y-m-01 00:00:00');
+    $endDate = date('Y-m-t 23:59:59', strtotime($month));
+
+    $dbConnection = dbConnect();
+    $query = "SELECT * FROM bookings where userId='$userId' and start BETWEEN '$startDate' AND '$endDate' and status=1 ORDER BY start";
+    $rows = $dbConnection->query($query);
+    if ($rows->rowCount() > 0) return $rows;
+    else return null;
+}

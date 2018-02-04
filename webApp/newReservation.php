@@ -28,11 +28,8 @@ if (!isUserLoggedIn()) {
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-2">
-            <img src="images/salesGIF.gif" alt="Logo dello Studio Sales" width="100%">
-        </div>
         <div class="col-10">
-            <h1 class="display-4">Sales - Prenotazione Online Studi</h1>
+            <h1 class="display-4">Prenotazione sale</h1>
         </div>
     </div>
     <div class="row"><br></div>
@@ -41,7 +38,6 @@ if (!isUserLoggedIn()) {
         <div class="col-12 text-center">
             <br>
             <h3 class="display-4">Nuova prenotazione</h3>
-            <?php if (isset($_GET['date'])) echo $_GET['date']; ?>
         </div>
     </div>
     <div class="row">
@@ -59,30 +55,30 @@ if (!isUserLoggedIn()) {
 
         <div class="col-12 justify-content-md-center">
             <br>
-            <form>
+            <form action="registerReservation.php" method="post">
                 <div class="form-row">
                     <div class="col-auto">
                         <label for="startDate">Data</label>
-                        <input type="date" class="form-control" id="startDate" aria-describedby="startDate"
+                        <input type="date" class="form-control" name="startDate" aria-describedby="startDate"
                                value="<?php if (isset($_GET['date'])) echo $_GET['date']; ?>">
                         <small id="startDate" class="form-text text-muted">Inserisci la data della prenotazione.</small>
                     </div>
                     <div class="col-auto">
                         <label for="startOre">Ore:</label>
-                        <select class="form-control" id="startOre" aria-describedby="startOre">
-                            <option>8</option>
-                            <option>9</option>
-                            <option>10</option>
-                            <option>11</option>
-                            <option>12</option>
-                            <option>13</option>
-                            <option>14</option>
-                            <option>15</option>
-                            <option>16</option>
-                            <option>17</option>
-                            <option>18</option>
-                            <option>19</option>
-                            <option>20</option>
+                        <select class="form-control" name="startOre" aria-describedby="startOre">
+                            <option value="08">8</option>
+                            <option value="09">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
                         </select>
                         <small id="startOre" class="form-text text-muted">Inserisci l'ora di inizio della
                             prenotazione.
@@ -90,20 +86,67 @@ if (!isUserLoggedIn()) {
                     </div>
                     <div class="col-auto">
                         <label for="startMin">Minuti:</label>
-                        <select class="form-control" id="startMin" aria-describedby="startMin">
-                            <option>00</option>
-                            <option>15</option>
-                            <option>30</option>
-                            <option>45</option>
+                        <select class="form-control" name="startMin" aria-describedby="startMin">
+                            <option value="00">00</option>
+                            <option value="15">15</option>
+                            <option value="30">30</option>
+                            <option value="45">45</option>
                         </select>
                         <small id="startMin" class="form-text text-muted">Inserisci il minuto di inizio della
                             prenotazione.
                         </small>
                     </div>
-                    <div class="form-row">
-
-                    </div>
                 </div>
+                    <div class="form-row">
+                        <div class="col-auto">
+                            <label for="endOre">Ore:</label>
+                            <select class="form-control" name="endOre" aria-describedby="endOre">
+                                <option value="08">8</option>
+                                <option value="09">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                            </select>
+                            <small id="endOre" class="form-text text-muted">Inserisci l'ora di fine della
+                                prenotazione.
+                            </small>
+                        </div>
+                        <div class="col-auto">
+                            <label for="endMin">Minuti:</label>
+                            <select class="form-control" name="endMin" aria-describedby="endMin">
+                                <option value="00">00</option>
+                                <option value="15">15</option>
+                                <option value="30">30</option>
+                                <option value="45">45</option>
+                            </select>
+                            <small id="endMin" class="form-text text-muted">Inserisci il minuto di fine della
+                                prenotazione.
+                            </small>
+                        </div>
+                        <div class="col-auto">
+                            <label for="room">Stanza:</label>
+                            <select class="form-control" name="room" aria-describedby="room">
+                                <?php
+                                $query = "SELECT roomId,roomName FROM rooms";
+                                $rows = $dbConnection->query($query);
+                                foreach ($rows as $row) {
+                                    echo "<option value=\"" . $row['roomId'] . "\">" . $row['roomName'] . "</option>";
+                                }
+                                ?>
+                            </select>
+                            <small id="room" class="form-text text-muted">Scegli la sala da prenotare</small>
+                        </div>
+                    </div>
+
 
                 <button type="submit" class="btn btn-primary">Prenota</button>
             </form>

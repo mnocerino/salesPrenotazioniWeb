@@ -176,7 +176,7 @@ function calculateUsedHours($userId, $month)
     $endDate = date('Y-m-t 00:00:00', strtotime($month));
 
     $dbConnection = dbConnect();
-    $query = "SELECT * FROM bookings where userId='$userId' and start BETWEEN '$startDate' AND '$endDate'";
+    $query = "SELECT * FROM bookings where userId='$userId' and start BETWEEN '$startDate' AND '$endDate' and status=1";
     $rows = $dbConnection->query($query);
     $usedSeconds = 0;
     foreach ($rows as $row) {
