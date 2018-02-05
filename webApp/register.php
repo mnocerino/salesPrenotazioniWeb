@@ -7,7 +7,7 @@
  */
 setlocale(LC_TIME, 'it_IT');
 require_once 'includes/database.php';
-require_once 'includes/userMethods.php';
+require_once 'includes/userFunctions.php';
 require_once 'includes/booking.php';
 $rooms = showRooms();
 session_start();

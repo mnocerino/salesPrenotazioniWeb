@@ -6,7 +6,7 @@
  * Time: 14:26
  */
 require_once 'includes/database.php';
-require_once 'includes/userMethods.php';
+require_once 'includes/userFunctions.php';
 session_start();
 $sessionId = session_id();
 $dbConnection = dbConnect();

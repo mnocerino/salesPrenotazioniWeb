@@ -334,3 +334,15 @@ function changeUserAllowance($userId, $allowance)
     $query = "UPDATE users SET allowance='$allowance' WHERE userId='$userId'";
     $dbConnection->query($query);
 }
+
+function getUserMailFromId($userId)
+{
+    $dbConnection = dbConnect();
+    $query = "SELECT mail FROM users WHERE userId='$userId'";
+    $rows = $dbConnection->query($query);
+    if ($rows->rowCount() > 0) {
+        foreach ($rows as $row) {
+            return $row['mail'];
+        }
+    }
+}

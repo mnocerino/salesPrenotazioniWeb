@@ -6,8 +6,9 @@
  * Time: 19:56
  */
 require_once 'database.php';
-require_once 'userMethods.php';
+require_once 'userFunctions.php';
 require_once 'configuration.php';
+require_once 'booking.php';
 
 function newBooking($userId, $start, $end, $roomId)
 {
@@ -56,19 +57,6 @@ function newBooking($userId, $start, $end, $roomId)
     }
 }
 
-function showRooms()
-{
-    $dbConnection = dbConnect();
-    $query = "SELECT roomId, roomName, roomDescription from rooms where isActive = 1";
-    return $dbConnection->query($query);
-}
-
-function showDeactivatedRooms()
-{
-    $dbConnection = dbConnect();
-    $query = "SELECT roomId, roomName, roomDescription from rooms where isActive = 0";
-    return $dbConnection->query($query);
-}
 
 function deleteBooking($bookingId)
 {
@@ -113,29 +101,7 @@ function getBookingInfo($bookingId)
     else return null;
 }
 
-function getRoomName($roomId)
-{
-    $dbConnection = dbConnect();
-    $query = "SELECT roomName from rooms WHERE roomId=$roomId";
-    $rows = $dbConnection->query($query);
-    if ($rows->rowCount() > 0) {
-        foreach ($rows as $row) {
-            return $row['roomName'];
-        }
-    } else return null;
-}
 
-function getRoomDescription($roomId)
-{
-    $dbConnection = dbConnect();
-    $query = "SELECT roomDescription from rooms WHERE roomId=$roomId";
-    $rows = $dbConnection->query($query);
-    if ($rows->rowCount() > 0) {
-        foreach ($rows as $row) {
-            return $row['roomDescription'];
-        }
-    } else return null;
-}
 
 function getUserBookings($userId, $month)
 {

@@ -7,9 +7,9 @@
  */
 
 require_once '../../includes/database.php';
-require_once '../../includes/userMethods.php';
+require_once '../../includes/userFunctions.php';
 require_once '../../includes/booking.php';
-require_once '../../includes/room.php';
+require_once '../../includes/rooms.php';
 
 session_start();
 if (!isUserLoggedIn()) {

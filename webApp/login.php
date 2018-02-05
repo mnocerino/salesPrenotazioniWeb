@@ -6,7 +6,7 @@
  * Time: 10:53
  */
 require_once 'includes/database.php';
-require_once 'includes/userMethods.php';
+require_once 'includes/userFunctions.php';
 session_start();
 if (isUserLoggedIn()) {
     header('Location: index.php');
