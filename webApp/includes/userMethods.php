@@ -26,7 +26,7 @@ function getUserName($userId)
 {
     $dbConnection = dbConnect();
     $sessionId = session_id();
-    $query = "SELECT name from users WHERE userId = (SELECT userId from sessions WHERE userId = '$userId') LIMIT 1;";
+    $query = "SELECT name from users WHERE userId = (SELECT userId from users WHERE userId = '$userId') LIMIT 1;";
 
     $rows = $dbConnection->query($query);
     if ($rows->rowCount() > 0) {
@@ -41,7 +41,7 @@ function getUserCompleteName($userId)
 {
     $dbConnection = dbConnect();
     $sessionId = session_id();
-    $query = "SELECT name,surname from users WHERE userId = (SELECT userId from sessions WHERE userId = '$userId') LIMIT 1;";
+    $query = "SELECT name,surname from users WHERE userId = (SELECT userId from users WHERE userId = '$userId') LIMIT 1;";
 
     $rows = $dbConnection->query($query);
     if ($rows->rowCount() > 0) {
@@ -57,7 +57,7 @@ function getUserSurname($userId)
 {
     $dbConnection = dbConnect();
     $sessionId = session_id();
-    $query = "SELECT surname from users WHERE userId = (SELECT userId from sessions WHERE userId = '$userId') LIMIT 1;";
+    $query = "SELECT surname from users WHERE userId = (SELECT userId from users WHERE userId = '$userId') LIMIT 1;";
 
     $rows = $dbConnection->query($query);
     if ($rows->rowCount() > 0) {
@@ -208,4 +208,129 @@ function secToHR($seconds)
 function getReadableRemainingTime($userId, $monthDate)
 {
     return secToHR(calculateRemainingSeconds($userId, $monthDate));
+}
+
+function registerNewUser($name, $surname, $mail, $password)
+{
+    $dbConnection = dbConnect();
+    $name = filter_var(trim($name), FILTER_SANITIZE_STRING);
+    $surname = filter_var(trim($surname), FILTER_SANITIZE_STRING);
+    $mail = filter_var(trim($mail), FILTER_SANITIZE_EMAIL);
+    $password = filter_var(trim($password), FILTER_SANITIZE_STRING);
+    $passwordHashed = hash('sha1', $password);
+    if (!checkIfUserExists($mail)) {
+        $query = "INSERT INTO users (name, surname, mail, password) VALUES ('$name' , '$surname', '$mail', '$passwordHashed')";
+        $dbConnection->query($query);
+        return getUserIdFromMail($mail);
+    } else return false;
+
+}
+
+function checkPasswordFromid($userId, $password)
+{
+    $dbConnection = dbConnect();
+    $query = "SELECT password FROM users WHERE userId = '$userId' LIMIT 1";
+    $rows = $dbConnection->query($query);
+    $passwordHashed = hash('sha1', $password);
+    if ($rows->rowCount() > 0) {
+        foreach ($rows as $row) {
+            if ($passwordHashed == $row['password']) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+function changePassword($userId, $oldPassword, $newPassword)
+{
+    if (checkPasswordFromid($userId, $oldPassword)) {
+        $dbConnection = dbConnect();
+        $passwordHashed = hash('sha1', $newPassword);
+        $query = "UPDATE users SET password = '$passwordHashed' WHERE userId=$userId";
+        $dbConnection->query($query);
+    }
+}
+
+function generateNewPassword()
+{
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < 10; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+
+function getActiveUsers()
+{
+    $dbConnection = dbConnect();
+    $query = "SELECT * from users WHERE status=1";
+    return $dbConnection->query($query);
+}
+
+function getDeactivatedUsers()
+{
+    $dbConnection = dbConnect();
+    $query = "SELECT * from users WHERE status=0";
+    return $dbConnection->query($query);
+}
+
+function makeAdmin($userId)
+{
+    $dbConnection = dbConnect();
+    $query = "INSERT INTO administrators (userId) VALUES ('$userId')";
+    echo $query;
+    $dbConnection->query($query);
+}
+
+function makeUser($userId)
+{
+    $dbConnection = dbConnect();
+    $query = "DELETE FROM administrators WHERE userId=$userId";
+    $dbConnection->query($query);
+}
+
+function adminChangeUserPassword($userId, $password)
+{
+    $dbConnection = dbConnect();
+    $passwordHashed = hash('sha1', $password);
+    $query = "UPDATE users SET password = '$passwordHashed' WHERE userId=$userId";
+    $dbConnection->query($query);
+}
+
+function activateUser($userId)
+{
+    $dbConnection = dbConnect();
+    $query = "UPDATE users SET status='1' WHERE userId='$userId'";
+    $dbConnection->query($query);
+}
+
+function deactivateUser($userId)
+{
+    $dbConnection = dbConnect();
+    $query = "UPDATE users SET status='0' WHERE userId='$userId'";
+    $dbConnection->query($query);
+}
+
+function getActiveUsersAdmins()
+{
+    $dbConnection = dbConnect();
+    $query = "SELECT administrators.userId,name,surname,mail from administrators JOIN  users  ON administrators.userId=users.userId and status=1";
+    return $dbConnection->query($query);
+}
+
+function changeUserRate($userId, $rate)
+{
+    $dbConnection = dbConnect();
+    $query = "UPDATE users SET rate='$rate' WHERE userId='$userId'";
+    $dbConnection->query($query);
+}
+
+function changeUserAllowance($userId, $allowance)
+{
+    $dbConnection = dbConnect();
+    $query = "UPDATE users SET allowance='$allowance' WHERE userId='$userId'";
+    $dbConnection->query($query);
 }

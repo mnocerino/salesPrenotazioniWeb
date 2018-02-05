@@ -16,26 +16,33 @@ function newBooking($userId, $start, $end, $roomId)
     $requested = $endBooking - $requestedBooking;
     $now = strtotime('now');
     if ($endBooking <= $requestedBooking) {
-        header('Location: newBooking.php?error=endBeforeStart');
+        header('Location: newReservation.php?error=endBeforeStart');
         die();
     }
 
     //Check if user has allowance hours
     if (calculateRemainingSeconds(getUserIdFromSession(), date('Y-m-d', strtotime('now'))) < $requested) {
-        header('Location: newBooking.php?error=notEnoughAllowance');
+        header('Location: newReservation.php?error=notEnoughAllowance');
         die();
     }
     //Check if start date is in the future
     if ($requestedBooking < $now) {
-        header('Location: newBooking.php?error=startIsInThePast');
+        header('Location: newReservation.php?error=startIsInThePast');
         die();
     }
     //Check if room is booked in those hours
-    $query = "SELECT * from bookings WHERE roomId= $roomId AND start BETWEEN '$start' and '$end' AND end BETWEEN '$start' and '$end'";
+    $query = "SELECT bookingId from bookings WHERE roomId= $roomId AND status=1 AND start BETWEEN '$start' and '$end'";
     $dbConnection = dbConnect();
     $rows = $dbConnection->query($query);
     if ($rows->rowCount() > 0) {
-        header('Location: newBooking.php?error=alreadyBooked');
+        header('Location: newReservation.php?error=alreadyBooked');
+        die();
+    }
+    $query = "SELECT bookingId from bookings WHERE roomId= $roomId AND status=1 AND end BETWEEN '$start' and '$end'";
+    $dbConnection = dbConnect();
+    $rows = $dbConnection->query($query);
+    if ($rows->rowCount() > 0) {
+        header('Location: newReservation.php?error=alreadyBooked');
         die();
     } else {
         $query = "INSERT INTO bookings  VALUES (NULL, '$roomId', '$userId', '1', '$start', '$end')";
@@ -52,7 +59,14 @@ function newBooking($userId, $start, $end, $roomId)
 function showRooms()
 {
     $dbConnection = dbConnect();
-    $query = "SELECT roomId, roomName from rooms";
+    $query = "SELECT roomId, roomName, roomDescription from rooms where isActive = 1";
+    return $dbConnection->query($query);
+}
+
+function showDeactivatedRooms()
+{
+    $dbConnection = dbConnect();
+    $query = "SELECT roomId, roomName, roomDescription from rooms where isActive = 0";
     return $dbConnection->query($query);
 }
 
@@ -107,6 +121,18 @@ function getRoomName($roomId)
     if ($rows->rowCount() > 0) {
         foreach ($rows as $row) {
             return $row['roomName'];
+        }
+    } else return null;
+}
+
+function getRoomDescription($roomId)
+{
+    $dbConnection = dbConnect();
+    $query = "SELECT roomDescription from rooms WHERE roomId=$roomId";
+    $rows = $dbConnection->query($query);
+    if ($rows->rowCount() > 0) {
+        foreach ($rows as $row) {
+            return $row['roomDescription'];
         }
     } else return null;
 }

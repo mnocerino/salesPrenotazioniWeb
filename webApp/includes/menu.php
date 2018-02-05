@@ -1,29 +1,17 @@
 <div class="row">
     <div class="col-12 text-center">
-        <a href="indexLogged.php">
-            <button class="btn btn-primary">Home</button>
-        </a>
-        <a href="myReservations.php">
-            <button class="btn btn-primary">Le mie prenotazioni</button>
-        </a>
-        <a href="newReservation.php">
-            <button class="btn btn-primary">Nuova prenotazione</button>
-        </a>
-
-        <a href="myAccount.php">
-            <button class="btn btn-primary">Il mio account</button>
-        </a>
+        <a href="indexLogged.php" class="btn btn-primary" role="button">Home</a>
+        <a href="myReservations.php" class="btn btn-primary" role="button">Le mie prenotazioni</a>
+        <a href="newReservation.php" class="btn btn-primary" role="button">Nuova prenotazione</a>
+        <a href="myAccount.php" class="btn btn-primary" role="button">Il mio account</a>
         <?php
         if (isUserAdmin(getUserIdFromSession())):
             ?>
-        <a href="administration/index.php">
-            <button class="btn btn-warning">Amministrazione</button>
-        </a>
+            <a href="administration/index.php" class="btn btn-warning" role="button">Amministrazione</a>
+
         <?php
         endif;
         ?>
-        <a href="logout.php">
-            <button class="btn btn-danger">Esci</button>
-        </a>
+        <a href="logout.php" class="btn btn-danger" role="button">Esci</a>
     </div>
 </div>

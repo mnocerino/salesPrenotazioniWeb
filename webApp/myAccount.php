@@ -42,7 +42,8 @@ if (!isUserLoggedIn()) {
             Costo orario: <?php echo getUserRate(getUserIdFromSession()) . "\xE2\x82\xAc"; ?><br>
             Tempo rimanente per il mese in
             corso: <?php echo getReadableRemainingTime(getUserIdFromSession(), date('Y-m-d', strtotime('now'))); ?>
-
+            <br>
+            <a href="changePassword.php" class="btn btn-primary" role="button">Cambia la tua password</a>
         </div>
     </div>
 

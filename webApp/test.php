@@ -8,12 +8,6 @@
 require_once 'includes/database.php';
 require_once 'includes/userMethods.php';
 require_once 'includes/booking.php';
-session_start();
-if (!isUserLoggedIn()) {
-    header('Location: index.php');
-    die();
-}
-echo strtotime('now');
 
-echo "<br>";
-echo checkIfUserCanDelete()
+$now = date('Y-m-d H:i:00', strtotime('now'));
+echo $now;

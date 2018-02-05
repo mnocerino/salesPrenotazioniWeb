@@ -72,7 +72,7 @@ if (isset($_GET['bookingId'])) {
                         echo "<tr><td>" . $row['bookingId'];
                         if (checkIfUserCanDelete($row['bookingId'])) {
                             $deleteAddress = "deleteReservation.php?bookingId=" . $row['bookingId'];
-                            echo "<br><a href=\"" . $deleteAddress . "\"><button class='btn btn-danger'>Elimina</button></a>";
+                            echo "<br><a href=\"" . $deleteAddress . "\" class='btn btn-danger' role='button'>Elimina</a>";
 
                         }
                         echo "</td>";
@@ -81,6 +81,7 @@ if (isset($_GET['bookingId'])) {
                         echo "<td>" . date('H:i', strtotime($row['end'])) . "</td>";
                         echo "<td>" . getRoomName($row['roomId']) . "</td></tr>";
                     }
+                    echo "</table>";
                 }
                 ?>
             </div>

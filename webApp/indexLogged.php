@@ -51,12 +51,10 @@ if (!isUserLoggedIn()) {
             $year = $dt->format('o');
             $week = $dt->format('W');
             ?>
-            <a href="<?php echo $_SERVER['PHP_SELF'] . '?week=' . ($week - 1) . '&year=' . $year; ?>">
-                <button class="btn btn-info">Settimana precedente</button>
-            </a>
-            <a href="<?php echo $_SERVER['PHP_SELF'] . '?week=' . ($week + 1) . '&year=' . $year; ?>">
-                <button class="btn btn-info">Settimana successiva</button>
-            </a>
+            <a href="<?php echo $_SERVER['PHP_SELF'] . '?week=' . ($week - 1) . '&year=' . $year; ?>"
+               class="btn btn-info" role="button">Settimana precedente</a>
+            <a href="<?php echo $_SERVER['PHP_SELF'] . '?week=' . ($week + 1) . '&year=' . $year; ?>"
+               class="btn btn-info" role="button">Settimana successiva</a>
         </div>
         <div class="col-3">
 
@@ -76,13 +74,13 @@ if (!isUserLoggedIn()) {
             $week = $dt->format('W');
             ?>
 
-            <table class="table table-striped table-bordered  text-center">
+            <table class="table table-striped table-bordered text-center">
                 <thead>
                 <tr>
-                    <td width="200px">
+                    <td>
                         Giorno
                     </td>
-                    <td colspan="200">
+                    <td>
                         Prenotazioni
                     </td>
                 </tr>
@@ -100,7 +98,7 @@ if (!isUserLoggedIn()) {
                         echo "<tr><td class='text-right'>$roomName</td>";
                         $startTime = $dt->format('Y-m-d' . " 00:00:00");
                         $endTime = $dt->format('Y-m-d') . " 23:59:59";
-                        $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' and roomId='$roomId' ORDER BY start";
+                        $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' and roomId='$roomId' AND status=1 ORDER BY start";
                         $rows = $dbConnection->query($query);
                         foreach ($rows as $row) {
                             echo "<td>";
@@ -109,7 +107,6 @@ if (!isUserLoggedIn()) {
                             echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
                             echo "</td>";
                         }
-                        echo "</tr>";
                     } ?>
                 </tr>
                 <tr>
@@ -125,7 +122,7 @@ if (!isUserLoggedIn()) {
                         echo "<tr><td class='text-right'>$roomName</td>";
                         $startTime = $dt->format('Y-m-d' . " 00:00:00");
                         $endTime = $dt->format('Y-m-d') . " 23:59:59";
-                        $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' and roomId='$roomId' ORDER BY start";
+                        $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' and roomId='$roomId' AND status=1 ORDER BY start";
                         $rows = $dbConnection->query($query);
                         foreach ($rows as $row) {
                             echo "<td>";
@@ -134,7 +131,6 @@ if (!isUserLoggedIn()) {
                             echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
                             echo "</td>";
                         }
-                        echo "</tr>";
                     } ?>
 
                 </tr>
@@ -151,7 +147,7 @@ if (!isUserLoggedIn()) {
                         echo "<tr><td class='text-right'>$roomName</td>";
                         $startTime = $dt->format('Y-m-d' . " 00:00:00");
                         $endTime = $dt->format('Y-m-d') . " 23:59:59";
-                        $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' and roomId='$roomId' ORDER BY start";
+                        $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' and roomId='$roomId' AND status=1 ORDER BY start";
                         $rows = $dbConnection->query($query);
                         foreach ($rows as $row) {
                             echo "<td>";
@@ -160,7 +156,7 @@ if (!isUserLoggedIn()) {
                             echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
                             echo "</td>";
                         }
-                        echo "</tr>";
+
                     } ?>
                 </tr>
                 <tr>
@@ -176,7 +172,7 @@ if (!isUserLoggedIn()) {
                         echo "<tr><td class='text-right'>$roomName</td>";
                         $startTime = $dt->format('Y-m-d' . " 00:00:00");
                         $endTime = $dt->format('Y-m-d') . " 23:59:59";
-                        $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' and roomId='$roomId' ORDER BY start";
+                        $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' and roomId='$roomId' AND status=1 ORDER BY start";
                         $rows = $dbConnection->query($query);
                         foreach ($rows as $row) {
                             echo "<td>";
@@ -185,7 +181,6 @@ if (!isUserLoggedIn()) {
                             echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
                             echo "</td>";
                         }
-                        echo "</tr>";
                     } ?>
                 </tr>
                 <tr>
@@ -201,7 +196,7 @@ if (!isUserLoggedIn()) {
                         echo "<tr><td class='text-right'>$roomName</td>";
                         $startTime = $dt->format('Y-m-d' . " 00:00:00");
                         $endTime = $dt->format('Y-m-d') . " 23:59:59";
-                        $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' and roomId='$roomId' ORDER BY start";
+                        $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' and roomId='$roomId' AND status=1  ORDER BY start";
                         $rows = $dbConnection->query($query);
                         foreach ($rows as $row) {
                             echo "<td>";
@@ -210,7 +205,6 @@ if (!isUserLoggedIn()) {
                             echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
                             echo "</td>";
                         }
-                        echo "</tr>";
                     } ?>
                 </tr>
                 <tr>
@@ -226,7 +220,7 @@ if (!isUserLoggedIn()) {
                         echo "<tr><td class='text-right'>$roomName</td>";
                         $startTime = $dt->format('Y-m-d' . " 00:00:00");
                         $endTime = $dt->format('Y-m-d') . " 23:59:59";
-                        $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' and roomId='$roomId' ORDER BY start";
+                        $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' and roomId='$roomId' AND status=1 ORDER BY start";
                         $rows = $dbConnection->query($query);
                         foreach ($rows as $row) {
                             echo "<td>";
@@ -235,7 +229,7 @@ if (!isUserLoggedIn()) {
                             echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
                             echo "</td>";
                         }
-                        echo "</tr>";
+
                     } ?>
                 </tr>
                 <tr>
@@ -251,7 +245,7 @@ if (!isUserLoggedIn()) {
                         echo "<tr><td class='text-right'>$roomName</td>";
                         $startTime = $dt->format('Y-m-d' . " 00:00:00");
                         $endTime = $dt->format('Y-m-d') . " 23:59:59";
-                        $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' and roomId='$roomId' ORDER BY start";
+                        $query = "SELECT * from bookings where start BETWEEN '$startTime' AND '$endTime' and roomId='$roomId' AND status=1  ORDER BY start";
                         $rows = $dbConnection->query($query);
                         foreach ($rows as $row) {
                             echo "<td>";
@@ -260,15 +254,12 @@ if (!isUserLoggedIn()) {
                             echo getUserCompleteName($row['userId']) . "  dalle " . $inizio . " alle " . $fine;
                             echo "</td>";
                         }
-                        echo "</tr>";
                     } ?>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
-
-
 </div>
 </body>
 </html>

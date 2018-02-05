@@ -26,22 +26,43 @@ if (isUserLoggedIn()) {
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-10">
+        <div class="col-lg-auto text-center mx-auto">
             <h1 class="display-3">Studio Associato di Psicologia Rebaudengo</h1>
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
+        <div class="col-lg-auto text-center mx-auto">
             <p>Area riservata ai professionisti collaboratori dello studio</p>
         </div>
     </div>
     <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6">
+        <div class="col-lg-12 text-center mx-auto">
+            <?php
+            if (isset($_GET['error']) && $_GET['error'] == "wrongPassword"):
+                ?>
+                <div class="alert alert-danger" role="alert">
+                    Hai inserito la password errata.
+                </div>
+            <?php
+            elseif (isset($_GET['error']) && $_GET['error'] == "userNotFound"):
+                ?>
+                <div class="alert alert-danger" role="alert">
+                    Questo utente non esiste. <br><a href="register.php">Registrati</a>.
+                </div>
+            <?php
+            elseif (isset($_GET['error']) && $_GET['error'] == "userDeactivated"):
+                ?>
+                <div class="alert alert-danger" role="alert">
+                    Questo utente è stato disabilitato. Contatta gli uffici.
+                </div>
+            <?php
+            endif;
+            ?>
                 <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#moduloLogin">
                     Login richiesto
                 </button>
+            <a href="register.php" class="btn btn-info" role="button">Registrati</a>
 
                 <!-- Modal -->
                 <form action="login.php" method="post">
