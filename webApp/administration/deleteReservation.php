@@ -23,4 +23,4 @@ if (isset($_GET['bookingId'])) {
 
 
 }
-header('Location: ../error.php?error=cannotDelete');
+header('Location: myReservations.php');
