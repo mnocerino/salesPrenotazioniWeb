@@ -23,6 +23,12 @@ if (isset($_GET['bookingId'])) {
 <!DOCTYPE html>
 <html lang="it">
 <head>
+    <!--
+    Mattia Nocerino - 818089
+    Progetto: realizzazione di un sistema web per la gestione della prenotazioni di sale e uffici in uno studio associato di psicologia.
+    Questa pagina mostra tutte le prenotazioni attive nel mese in corso.
+    -->
+
     <title>Prenotazione studi Sales</title>
     <?php
     require_once 'includes/includes.php';

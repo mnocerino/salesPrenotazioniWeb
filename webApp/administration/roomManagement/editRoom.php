@@ -35,6 +35,12 @@ if (isset($_GET['roomId'])):
     <!DOCTYPE html>
     <html lang="it">
     <head>
+        <!--
+        Mattia Nocerino - 818089
+        Progetto: realizzazione di un sistema web per la gestione della prenotazioni di sale e uffici in uno studio associato di psicologia.
+        Pagina per la modifica di una stanza gia' presente a sistema.
+        -->
+
         <title>Prenotazione studi Sales - Registrazione</title>
         <?php
         require_once '../../includes/includes.php';
@@ -63,7 +69,7 @@ if (isset($_GET['roomId'])):
                         <small id="nameHelp" class="form-text text-muted">Inserisci il nome della sala (corto).</small>
 
 
-                        <label for="description">Descrizione</label>
+                        <label for="roomDescription">Descrizione</label>
                         <input type="text" class="form-control" id="roomDescription" name="roomDescription"
                                aria-describedby="roomDescriptionHelp" value="<?php echo $roomDescription ?>" required>
                         <small id="roomDescriptionHelp" class="form-text text-muted">Inserisci la descrizione della

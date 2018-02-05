@@ -12,8 +12,6 @@ if (isUserLoggedIn()) {
     header('Location: index.php');
     die();
 } else if (isset($_POST["mail"]) && isset($_POST["password"])) {
-    //TODO: check if POST data is empty.
-
     $dbConnection = dbConnect();
     $sessionId = session_id();
     $mail = filter_var(trim($_POST['mail']), FILTER_SANITIZE_EMAIL);

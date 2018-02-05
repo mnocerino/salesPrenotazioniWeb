@@ -9,7 +9,7 @@ setlocale(LC_TIME, 'it_IT');
 require_once '../includes/database.php';
 require_once '../includes/userFunctions.php';
 require_once '../includes/booking.php';
-require_once '../includes/rooms.php';
+
 
 session_start();
 if (!isUserLoggedIn()) {
@@ -30,6 +30,12 @@ $deactivatedUsers = getDeactivatedUsers();
 <!DOCTYPE html>
 <html lang="it">
 <head>
+    <!--
+    Mattia Nocerino - 818089
+    Progetto: realizzazione di un sistema web per la gestione della prenotazioni di sale e uffici in uno studio associato di psicologia.
+    Pagina principale di gestione delle utenze del sito, permette di creare nuovi utenti, resettare password e bloccare e sbloccare gli utenti cosi come cambiare alcune impostazioni.
+    -->
+
     <title>Prenotazione studi Sales</title>
     <?php
     require_once '../includes/includes.php';

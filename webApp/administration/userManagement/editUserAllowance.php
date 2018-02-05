@@ -8,7 +8,7 @@
 require_once '../../includes/database.php';
 require_once '../../includes/userFunctions.php';
 require_once '../../includes/booking.php';
-require_once '../../includes/rooms.php';
+
 session_start();
 if (!isUserLoggedIn()) {
     header('Location: ../../index.php');
@@ -33,6 +33,12 @@ if (isset($_GET['userId'])):
     <!DOCTYPE html>
     <html lang="it">
     <head>
+        <!--
+        Mattia Nocerino - 818089
+        Progetto: realizzazione di un sistema web per la gestione della prenotazioni di sale e uffici in uno studio associato di psicologia.
+        Pagina per la modifica del monte ore di un professionista.
+        -->
+
         <title>Prenotazione studi Sales - Registrazione</title>
         <?php
         require_once '../../includes/includes.php';
@@ -56,7 +62,7 @@ if (isset($_GET['userId'])):
                     <div class="form-group">
                         <input type="text" class="form-control" id="name" name="userId" aria-describedby="nameHelp"
                                value="<?php echo $_GET['userId'] ?>" required hidden>
-                        <label for="name">Monte ore</label>
+                        <label for="userAllowance">Monte ore</label>
                         <input type="number" class="form-control" id="userAllowance" name="userAllowance"
                                aria-describedby="userAllowanceHelp"
                                value="<?php echo getUserAllowance($_GET['userId']) ?>" required>

@@ -8,8 +8,6 @@
 setlocale(LC_TIME, 'it_IT');
 require_once 'includes/database.php';
 require_once 'includes/userFunctions.php';
-require_once 'includes/booking.php';
-$rooms = showRooms();
 session_start();
 $stage2 = false;
 if (isUserLoggedIn()) {
@@ -24,6 +22,12 @@ if (isset($_POST['name']) && isset($_POST['surname']) && isset($_POST['email']) 
 <!DOCTYPE html>
 <html lang="it">
 <head>
+    <!--
+    Mattia Nocerino - 818089
+    Progetto: realizzazione di un sistema web per la gestione della prenotazioni di sale e uffici in uno studio associato di psicologia.
+    Pagina di registrazione utenza al sito.
+    -->
+
     <title>Prenotazione studi Sales - Registrazione</title>
     <?php
     require_once 'includes/includes.php';

@@ -7,7 +7,6 @@
  */
 require_once 'database.php';
 require_once 'userFunctions.php';
-require_once 'configuration.php';
 require_once 'booking.php';
 
 function deactivateRoom($roomId)

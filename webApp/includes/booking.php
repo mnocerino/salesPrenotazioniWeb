@@ -7,7 +7,6 @@
  */
 require_once 'database.php';
 require_once 'userFunctions.php';
-require_once 'configuration.php';
 require_once 'booking.php';
 
 function newBooking($userId, $start, $end, $roomId)
@@ -100,7 +99,6 @@ function getBookingInfo($bookingId)
     if ($rows->rowCount() > 0) return $rows;
     else return null;
 }
-
 
 
 function getUserBookings($userId, $month)

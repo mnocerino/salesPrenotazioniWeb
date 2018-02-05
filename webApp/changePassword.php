@@ -8,7 +8,6 @@
 require_once 'includes/database.php';
 require_once 'includes/userFunctions.php';
 require_once 'includes/booking.php';
-require_once 'includes/rooms.php';
 session_start();
 if (!isUserLoggedIn()) {
     header('Location: index.php');
@@ -29,6 +28,12 @@ if (isset($_POST['oldPassword']) && isset($_POST['newPassword'])) {
 <!DOCTYPE html>
 <html lang="it">
 <head>
+    <!--
+    Mattia Nocerino - 818089
+    Progetto: realizzazione di un sistema web per la gestione della prenotazioni di sale e uffici in uno studio associato di psicologia.
+    Pagina per il cambio password da parte dell'utente.
+    -->
+
     <title>Prenotazione studi Sales - Cambio password</title>
     <?php
     require_once 'includes/includes.php';

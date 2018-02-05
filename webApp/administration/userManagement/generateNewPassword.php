@@ -8,9 +8,6 @@
 setlocale(LC_TIME, 'it_IT');
 require_once '../../includes/database.php';
 require_once '../../includes/userFunctions.php';
-require_once '../../includes/booking.php';
-require_once '../../includes/rooms.php';
-$rooms = showRooms();
 session_start();
 $stage2 = false;
 if (!isUserLoggedIn()) {
@@ -32,6 +29,12 @@ if (isset($_POST['userId'])) {
 <!DOCTYPE html>
 <html lang="it">
 <head>
+    <!--
+    Mattia Nocerino - 818089
+    Progetto: realizzazione di un sistema web per la gestione della prenotazioni di sale e uffici in uno studio associato di psicologia.
+    Pagina per il cambio password da parte di un amministratore. La password e' generata automaticamente.
+    -->
+
     <title>Prenotazione studi Sales - Registrazione</title>
     <?php
     require_once '../../includes/includes.php';

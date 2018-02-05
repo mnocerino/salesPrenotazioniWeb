@@ -29,6 +29,12 @@ if (isset($_POST['roomName']) && isset($_POST['roomDescription'])) {
 <!DOCTYPE html>
 <html lang="it">
 <head>
+    <!--
+    Mattia Nocerino - 818089
+    Progetto: realizzazione di un sistema web per la gestione della prenotazioni di sale e uffici in uno studio associato di psicologia.
+    Pagina per la creazione di una nuova stanza.
+    -->
+
     <title>Prenotazione studi Sales - Registrazione</title>
     <?php
     require_once '../../includes/includes.php';

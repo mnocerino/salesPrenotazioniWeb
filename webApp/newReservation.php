@@ -20,6 +20,12 @@ if (!isUserLoggedIn()) {
 <!DOCTYPE html>
 <html lang="it">
 <head>
+    <!--
+    Mattia Nocerino - 818089
+    Progetto: realizzazione di un sistema web per la gestione della prenotazioni di sale e uffici in uno studio associato di psicologia.
+    Pagina per la creazione di nuove prenotazioni.
+    -->
+
     <title>Prenotazione studi Sales</title>
     <?php
     require_once 'includes/includes.php';
@@ -137,55 +143,55 @@ if (!isUserLoggedIn()) {
                         </small>
                     </div>
                 </div>
-                    <div class="form-row">
-                        <div class="col-auto">
-                            <label for="endOre">Ore:</label>
-                            <select class="form-control" name="endOre" id="endOre" aria-describedby="endOre">
-                                <option value="08">8</option>
-                                <option value="09">9</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
-                                <option value="13">13</option>
-                                <option value="14">14</option>
-                                <option value="15">15</option>
-                                <option value="16">16</option>
-                                <option value="17">17</option>
-                                <option value="18">18</option>
-                                <option value="19">19</option>
-                                <option value="20">20</option>
-                                <option value="21">21</option>
-                            </select>
-                            <small id="endOreTip" class="form-text text-muted">Inserisci l'ora di fine della
-                                prenotazione.
-                            </small>
-                        </div>
-                        <div class="col-auto">
-                            <label for="endMin">Minuti:</label>
-                            <select class="form-control" name="endMin" id="endMin" aria-describedby="endMin">
-                                <option value="00">00</option>
-                                <option value="15">15</option>
-                                <option value="30">30</option>
-                                <option value="45">45</option>
-                            </select>
-                            <small id="endMinTip" class="form-text text-muted">Inserisci il minuto di fine della
-                                prenotazione.
-                            </small>
-                        </div>
-                        <div class="col-auto">
-                            <label for="room">Stanza:</label>
-                            <select class="form-control" name="room" id="room" aria-describedby="room">
-                                <?php
-                                $query = "SELECT roomId,roomName FROM rooms where isActive = 1";
-                                $rows = $dbConnection->query($query);
-                                foreach ($rows as $row) {
-                                    echo "<option value=\"" . $row['roomId'] . "\">" . $row['roomName'] . "</option>";
-                                }
-                                ?>
-                            </select>
-                            <small id="roomTip" class="form-text text-muted">Scegli la sala da prenotare</small>
-                        </div>
+                <div class="form-row">
+                    <div class="col-auto">
+                        <label for="endOre">Ore:</label>
+                        <select class="form-control" name="endOre" id="endOre" aria-describedby="endOre">
+                            <option value="08">8</option>
+                            <option value="09">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                        </select>
+                        <small id="endOreTip" class="form-text text-muted">Inserisci l'ora di fine della
+                            prenotazione.
+                        </small>
                     </div>
+                    <div class="col-auto">
+                        <label for="endMin">Minuti:</label>
+                        <select class="form-control" name="endMin" id="endMin" aria-describedby="endMin">
+                            <option value="00">00</option>
+                            <option value="15">15</option>
+                            <option value="30">30</option>
+                            <option value="45">45</option>
+                        </select>
+                        <small id="endMinTip" class="form-text text-muted">Inserisci il minuto di fine della
+                            prenotazione.
+                        </small>
+                    </div>
+                    <div class="col-auto">
+                        <label for="room">Stanza:</label>
+                        <select class="form-control" name="room" id="room" aria-describedby="room">
+                            <?php
+                            $query = "SELECT roomId,roomName FROM rooms where isActive = 1";
+                            $rows = $dbConnection->query($query);
+                            foreach ($rows as $row) {
+                                echo "<option value=\"" . $row['roomId'] . "\">" . $row['roomName'] . "</option>";
+                            }
+                            ?>
+                        </select>
+                        <small id="roomTip" class="form-text text-muted">Scegli la sala da prenotare</small>
+                    </div>
+                </div>
 
 
                 <button type="submit" class="btn btn-primary">Prenota</button>

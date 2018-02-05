@@ -67,6 +67,7 @@ function getUserSurname($userId)
     } else return "";
 
 }
+
 function getUserIdFromSession()
 {
     $dbConnection = dbConnect();
