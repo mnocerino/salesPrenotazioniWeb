@@ -29,13 +29,8 @@ if (isset($_GET['userId'])):
 
     <!DOCTYPE html>
     <html lang="it">
+    <meta charset="UTF-8">
     <head>
-        <!--
-        Mattia Nocerino - 818089
-        Progetto: realizzazione di un sistema web per la gestione della prenotazioni di sale e uffici in uno studio associato di psicologia.
-        Pagina per la modifica del costo orario di una prenotazione.
-        -->
-
         <title>Prenotazione studi Sales - Registrazione</title>
         <?php
         require_once '../../includes/includes.php';

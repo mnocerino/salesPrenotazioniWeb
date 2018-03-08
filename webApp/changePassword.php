@@ -27,13 +27,8 @@ if (isset($_POST['oldPassword']) && isset($_POST['newPassword'])) {
 
 <!DOCTYPE html>
 <html lang="it">
+<meta charset="UTF-8">
 <head>
-    <!--
-    Mattia Nocerino - 818089
-    Progetto: realizzazione di un sistema web per la gestione della prenotazioni di sale e uffici in uno studio associato di psicologia.
-    Pagina per il cambio password da parte dell'utente.
-    -->
-
     <title>Prenotazione studi Sales - Cambio password</title>
     <?php
     require_once 'includes/includes.php';

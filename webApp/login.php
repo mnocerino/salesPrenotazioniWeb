@@ -27,9 +27,9 @@ if (isUserLoggedIn()) {
 
     //DELETE OLD SESSION IF EXISTS
     $userId = getUserIdFromMail($mail);
-
+    echo $userId;
     if (!isUserActive($userId)) {
-        header('Location: index.php?error=userDeactivated');
+        //header('Location: index.php?error=userDeactivated');
         die();
     }
     $query = "DELETE FROM sessions WHERE userId='$userId'";

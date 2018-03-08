@@ -28,6 +28,7 @@ if (isset($_POST['roomName']) && isset($_POST['roomDescription'])) {
 
 <!DOCTYPE html>
 <html lang="it">
+<meta charset="UTF-8">
 <head>
     <!--
     Mattia Nocerino - 818089

@@ -29,13 +29,8 @@ if (isset($_POST['name']) && isset($_POST['surname']) && isset($_POST['email']))
 ?>
 <!DOCTYPE html>
 <html lang="it">
+<meta charset="UTF-8">
 <head>
-    <!--
-    Mattia Nocerino - 818089
-    Progetto: realizzazione di un sistema web per la gestione della prenotazioni di sale e uffici in uno studio associato di psicologia.
-    Pagina principale per la creazione di un nuovo utente.
-    -->
-
     <title>Prenotazione studi Sales - Registrazione</title>
     <?php
     require_once '../../includes/includes.php';

@@ -1,4 +1,8 @@
 <?php
+//  DO NOT USE THIS TO REGISTER NEW USERS!
+
+die();
+
 /**
  * Created by PhpStorm.
  * User: Mattia Nocerino - mnocerino@gmail.com
@@ -21,13 +25,8 @@ if (isset($_POST['name']) && isset($_POST['surname']) && isset($_POST['email']) 
 ?>
 <!DOCTYPE html>
 <html lang="it">
+<meta charset="UTF-8">
 <head>
-    <!--
-    Mattia Nocerino - 818089
-    Progetto: realizzazione di un sistema web per la gestione della prenotazioni di sale e uffici in uno studio associato di psicologia.
-    Pagina di registrazione utenza al sito.
-    -->
-
     <title>Prenotazione studi Sales - Registrazione</title>
     <?php
     require_once 'includes/includes.php';

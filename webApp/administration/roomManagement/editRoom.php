@@ -34,6 +34,7 @@ if (isset($_GET['roomId'])):
 
     <!DOCTYPE html>
     <html lang="it">
+    <meta charset="UTF-8">
     <head>
         <!--
         Mattia Nocerino - 818089

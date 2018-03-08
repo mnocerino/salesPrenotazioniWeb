@@ -20,13 +20,8 @@ if (!isUserLoggedIn()) {
 
 <!DOCTYPE html>
 <html lang="it">
+<meta charset="UTF-8">
 <head>
-    <!--
-    Mattia Nocerino - 818089
-    Progetto: realizzazione di un sistema web per la gestione della prenotazioni di sale e uffici in uno studio associato di psicologia.
-    Pagina principale della applicazione, mostra tutte le prenotazioni effettuate nella settimana in corso e permette di crearne delle nuove.
-    -->
-
     <title>Prenotazione studi Sales</title>
     <?php
     require_once 'includes/includes.php';

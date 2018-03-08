@@ -17,12 +17,8 @@ if (isUserLoggedIn()) {
 
 <!DOCTYPE html>
 <html lang="it">
+<meta charset="UTF-8">
 <head>
-    <!--
-    Mattia Nocerino - 818089
-    Progetto: realizzazione di un sistema web per la gestione della prenotazioni di sale e uffici in uno studio associato di psicologia.
-    Pagina principale di login, tutte le funzionalita' del sito richiedono di visitare questa pagina per effettuare il login.
-    -->
     <title>Prenotazione studi Sales</title>
     <?php
     require_once 'includes/includes.php';
@@ -52,7 +48,7 @@ if (isUserLoggedIn()) {
             elseif (isset($_GET['error']) && $_GET['error'] == "userNotFound"):
                 ?>
                 <div class="alert alert-danger" role="alert">
-                    Questo utente non esiste. <br><a href="register.php">Registrati</a>.
+                    Questo utente non esiste.
                 </div>
             <?php
             elseif (isset($_GET['error']) && $_GET['error'] == "userDeactivated"):
@@ -67,7 +63,7 @@ if (isUserLoggedIn()) {
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#moduloLogin">
                 Login richiesto
             </button>
-            <a href="register.php" class="btn btn-info" role="button">Registrati</a>
+
 
             <!-- Modal -->
             <form action="login.php" method="post">

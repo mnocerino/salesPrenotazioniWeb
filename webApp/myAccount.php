@@ -19,13 +19,8 @@ if (!isUserLoggedIn()) {
 
 <!DOCTYPE html>
 <html lang="it">
+<meta charset="UTF-8">
 <head>
-    <!--
-    Mattia Nocerino - 818089
-    Progetto: realizzazione di un sistema web per la gestione della prenotazioni di sale e uffici in uno studio associato di psicologia.
-    Questa pagina fornisce informazioni riguardo il proprio account, costi orari, monte ore e tempo rimanente per il mese in corso.
-    -->
-
     <title>Prenotazione studi Sales</title>
     <?php
     require_once 'includes/includes.php';

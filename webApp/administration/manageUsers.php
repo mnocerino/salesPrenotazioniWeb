@@ -29,13 +29,8 @@ $deactivatedUsers = getDeactivatedUsers();
 
 <!DOCTYPE html>
 <html lang="it">
+<meta charset="UTF-8">
 <head>
-    <!--
-    Mattia Nocerino - 818089
-    Progetto: realizzazione di un sistema web per la gestione della prenotazioni di sale e uffici in uno studio associato di psicologia.
-    Pagina principale di gestione delle utenze del sito, permette di creare nuovi utenti, resettare password e bloccare e sbloccare gli utenti cosi come cambiare alcune impostazioni.
-    -->
-
     <title>Prenotazione studi Sales</title>
     <?php
     require_once '../includes/includes.php';

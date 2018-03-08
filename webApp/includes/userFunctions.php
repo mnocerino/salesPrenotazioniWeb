@@ -125,8 +125,9 @@ function checkIfUserExists($mail)
 function isUserActive($userId)
 {
     $dbConnection = dbConnect();
-    $query = "SELECT status FROM USERS WHERE userId= '$userId'";
+    $query = "SELECT status FROM users WHERE userId = '$userId'";
     $rows = $dbConnection->query($query);
+    //echo $query;
     if ($rows->rowCount() > 0) {
         foreach ($rows as $row) {
             if (1 == $row['status']) {
@@ -217,10 +218,8 @@ function registerNewUser($name, $surname, $mail, $password)
     $name = filter_var(trim($name), FILTER_SANITIZE_STRING);
     $surname = filter_var(trim($surname), FILTER_SANITIZE_STRING);
     $mail = filter_var(trim($mail), FILTER_SANITIZE_EMAIL);
-    $password = filter_var(trim($password), FILTER_SANITIZE_STRING);
-    $passwordHashed = hash('sha1', $password);
     if (!checkIfUserExists($mail)) {
-        $query = "INSERT INTO users (name, surname, mail, password) VALUES ('$name' , '$surname', '$mail', '$passwordHashed')";
+        $query = "INSERT INTO users (name, surname, mail, password) VALUES ('$name' , '$surname', '$mail', '$password')";
         $dbConnection->query($query);
         return getUserIdFromMail($mail);
     } else return false;
