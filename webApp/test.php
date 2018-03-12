@@ -14,8 +14,8 @@ echo getUserRate(13) . '<br>';
 echo getUserRatePM(13);
 
 echo '<br>';
-$start = '2018-03-02 13:45:00';
-$end = '2018-03-02 14:30:00';
+$start = '2018-03-02 13:15:00';
+$end = '2018-03-02 14:15:00';
 echo $start . '<br>' . $end . '<br>';
 echo calculateBookingCost(13, $start, $end);
 echo '<br>Fine dello script';

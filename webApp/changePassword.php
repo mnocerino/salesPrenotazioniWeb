@@ -42,6 +42,8 @@ if (isset($_POST['oldPassword']) && isset($_POST['newPassword'])) {
             <h1>Cambio password</h1><br>
         </div>
     </div>
+    <div class="row"><br></div>
+    <?php require_once 'includes/menu.php'; ?>
     <div class="row">
         <div class="col-md-auto text-center mx-auto">
 

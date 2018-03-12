@@ -9,7 +9,7 @@ require_once 'database.php';
 require_once 'userFunctions.php';
 require_once 'booking.php';
 
-function newBooking($userId, $start, $end, $roomId)
+function newBooking($userId, $start, $end, $roomId, $price)
 {
     $requestedBooking = strtotime($start);
     $endBooking = strtotime($end);
@@ -53,7 +53,7 @@ function newBooking($userId, $start, $end, $roomId)
         header('Location: newReservation.php?error=alreadyBooked');
         die();
     } else {
-        $query = "INSERT INTO bookings  VALUES (NULL, '$roomId', '$userId', '1', '$start', '$end')";
+        $query = "INSERT INTO bookings  VALUES (NULL, '$roomId', '$userId', '1', '$start', '$end','$price')";
         $rows = $dbConnection->query($query);
         $query = "SELECT bookingId from bookings WHERE userid='$userId' AND roomId = '$roomId' AND start = '$start' AND end = '$end' LIMIT 1";
         echo $query;
@@ -108,7 +108,7 @@ function getBookingInfo($bookingId)
     else return null;
 }
 
-function getUserBookings($userId, $month)
+function getUserBookings($userId)
 {
     $startDate = date('Y-m-01 00:00:00');
     //$endDate = date('Y-m-t 23:59:59', strtotime($month));
@@ -121,21 +121,63 @@ function getUserBookings($userId, $month)
 
 function calculateBookingCost($userId, $start, $end)
 {
-
-
     $totalCost = 0.0;
-    $pmCost = 0.0;
-    $amCost = 0.0;
+    $pmCost = floatval(0);
+    $amCost = floatval(0);
+    $today = date('Y-m-d', strtotime($start));
+    $timeat14 = $today . ' 14:00:00';
     $userRateAM = getUserRate($userId);
-    $userRatePM = getUserRate($userId);
+    $userRatePM = getUserRatePM($userId);
     $startH = date('H', strtotime($start));
-    $startI = date('i', strtotime($start));
     $endH = date('H', strtotime($end));
-    $endI = date('i', strtotime($end));
-    $minutes = round(abs(strtotime($end) - strtotime($start)) / 60, 2); //THIS RETURNS NUM. OF MINUTES
+    $addPM = false;
+    $addAM = false;
+    //$minutes = round(abs(strtotime($end) - strtotime($start)) / 60, 2); //THIS RETURNS NUM. OF MINUTES
     //TODO: Generate all cases and calculate prices accordingly. Rates changes at 2PM. Round everything at 30 minutes. (15->30 min, 45-> 1h.)
+    if ($endH >= 14 && $start < $timeat14) {
+        $amMinutes = round(abs(strtotime($timeat14) - strtotime($start)) / 60 / 60, 2);
+        $whole = floor($amMinutes);
+        $decimals = $amMinutes - $whole;
+        if ($decimals == 0.25 || $decimals == 0.75) {
+            $addAM = true;
+            //$amMinutes=$amMinutes+0.25;
+        }
+        $amCost = floatval($amMinutes) * floatval($userRateAM);
 
+        $pmMinutes = round(abs(strtotime($end) - strtotime($timeat14)) / 60 / 60, 2);
+        $whole = floor($pmMinutes);
+        $decimals = $pmMinutes - $whole;
+        if ($decimals == 0.25 || $decimals == 0.75) {
+            $addPM = true;
+            //$pmMinutes=$pmMinutes+0.25;
+        }
+        $pmCost = floatval($pmMinutes) * floatval($userRatePM);
 
+        if ($addPM && !$addAM) {
+            $pmCost = $pmCost + 0.25 * $userRatePM;
+        } else if (!$addPM && $addAM) {
+            $amCost = $amCost + 0.25 * $userRateAM;
+        }
+    } else if ($start < $timeat14 && $end < $timeat14) {
+        $amMinutes = round(abs(strtotime($end) - strtotime($start)) / 60 / 60, 2);
+        $whole = floor($amMinutes);
+        $decimals = $amMinutes - $whole;
+        echo 'Minuti: ' . $amMinutes . '<br>';
+        echo 'Decimali: ' . $decimals . '<br>';
+        if ($decimals == 0.25 || $decimals == 0.75) {
+            $amMinutes = $amMinutes + 0.25;
+            echo 'Minuti: ' . $amMinutes . '<br>';
+        }
+        $amCost = floatval($amMinutes) * floatval($userRateAM);
+    } else if ($startH >= 14 && $endH >= 14) {
+        $pmMinutes = round(abs(strtotime($end) - strtotime($start)) / 60 / 60, 2);
+        $whole = floor($pmMinutes);
+        $decimals = $pmMinutes - $whole;
+        if ($decimals == 0.25 || $decimals == 0.75) {
+            $pmMinutes = $pmMinutes + 0.25;
+        }
+        $pmCost = floatval($pmMinutes) * floatval($userRatePM);
+    }
     $totalCost = $totalCost + $pmCost + $amCost;
     return $totalCost;
 }

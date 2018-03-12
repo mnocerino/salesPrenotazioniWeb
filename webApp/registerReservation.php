@@ -24,7 +24,8 @@ if (!isUserLoggedIn()) {
     $room = filter_var(trim($_POST['room']), FILTER_SANITIZE_NUMBER_INT);
     $queryStart = $startDate . " " . $startOre . ":" . $startMin . ":00";
     $queryEnd = $startDate . " " . $endOre . ":" . $endMin . ":00";
-    $booked = newBooking((getUserIdFromSession()), $queryStart, $queryEnd, $room);
+    $price = calculateBookingCost(getUserIdFromSession(), $queryStart, $queryEnd);
+    $booked = newBooking((getUserIdFromSession()), $queryStart, $queryEnd, $room, $price);
     $header = "Location: myReservations.php?bookingId=" . $booked;
     header($header);
 } else header('Location newReservation.php?error=missingData');

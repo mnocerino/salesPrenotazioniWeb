@@ -66,10 +66,10 @@ if (isset($_GET['bookingId'])) {
                 <br>
                 <h4>Prenotazioni effettuate</h4>
                 <?php
-                $rows = getUserBookings(getUserIdFromSession(), date('Y-m-d', strtotime('now')));
+                $rows = getUserBookings(getUserIdFromSession());
                 if ($rows != null) {
                     echo "<table class=\"table table-striped table-bordered  text-center\">";
-                    echo "<thead><tr><td>Prenotazione</td><td>Giorno</td><td>Inizio</td><td>Fine</td><td>Sala</td></tr></thead>";
+                    echo "<thead><tr><td>Prenotazione</td><td>Giorno</td><td>Inizio</td><td>Fine</td><td>Sala</td><td>Costo</td></tr></thead>";
                     foreach ($rows as $row) {
                         echo "<tr><td>" . $row['bookingId'];
                         if (checkIfUserCanDelete($row['bookingId'])) {
@@ -81,7 +81,8 @@ if (isset($_GET['bookingId'])) {
                         echo "<td>" . date('d-m-Y', strtotime($row['start'])) . "</td>";
                         echo "<td>" . date('H:i', strtotime($row['start'])) . "</td>";
                         echo "<td>" . date('H:i', strtotime($row['end'])) . "</td>";
-                        echo "<td>" . getRoomName($row['roomId']) . "</td></tr>";
+                        echo "<td>" . getRoomName($row['roomId']) . "</td>";
+                        echo "<td>" . $row['price'] . "\xE2\x82\xAc</td></tr>";
                     }
                     echo "</table>";
                 }
