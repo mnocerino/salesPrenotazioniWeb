@@ -69,6 +69,12 @@ if (!isUserLoggedIn()) {
                     La sala è già prenotata in questo orario. Scegli un'altra sala o un diverso orario.
                 </div>
             <?php
+            elseif (isset($_GET['error']) && $_GET['error'] == "endOver"):
+                ?>
+                <div class="alert alert-danger" role="alert">
+                    Lo studio chiude alle 21. Non è possibile prenotare oltre questo orario.
+                </div>
+            <?php
             elseif (isset($_GET['error']) && $_GET['error'] == "missingData"):
                 ?>
                 <div class="alert alert-danger" role="alert">
@@ -84,7 +90,6 @@ if (!isUserLoggedIn()) {
         <div class="col-4">
             <p class="lead text-center">Regole</p>
             <ul>
-                <li>E' possibile prenotare le sale fino a 10 giorni</li>
                 <li>Le prenotazioni possono essere cancellate fino a 48 prima della prenotazione stessa</li>
             </ul>
         </div>

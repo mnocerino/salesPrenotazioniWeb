@@ -22,16 +22,8 @@ if (!isUserLoggedIn()) {
     $endOre = filter_var(trim($_POST['endOre']), FILTER_SANITIZE_NUMBER_INT);
     $endMin = filter_var(trim($_POST['endMin']), FILTER_SANITIZE_NUMBER_INT);
     $room = filter_var(trim($_POST['room']), FILTER_SANITIZE_NUMBER_INT);
-
     $queryStart = $startDate . " " . $startOre . ":" . $startMin . ":00";
-    echo $queryStart;
-    echo "<br>";
     $queryEnd = $startDate . " " . $endOre . ":" . $endMin . ":00";
-    echo $queryEnd;
-    echo "<br>";
-    echo $room;
-    echo "<br>";
-    echo(strtotime($queryStart));
     $booked = newBooking((getUserIdFromSession()), $queryStart, $queryEnd, $room);
     $header = "Location: myReservations.php?bookingId=" . $booked;
     header($header);

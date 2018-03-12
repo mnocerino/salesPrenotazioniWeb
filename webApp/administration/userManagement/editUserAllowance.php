@@ -16,6 +16,7 @@ if (!isUserLoggedIn()) {
 }
 if (!isUserAdmin(getUserIdFromSession())) {
     header('Location: ../../index.php');
+    die();
 }
 
 if (isset($_POST['userId']) && isset($_POST['userAllowance'])) {

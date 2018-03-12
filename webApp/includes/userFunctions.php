@@ -172,6 +172,18 @@ function getUserRate($userId)
     }
 }
 
+function getUserRatePM($userId)
+{
+    $dbConnection = dbConnect();
+    $query = "SELECT ratePM FROM users WHERE userId='$userId'";
+    $rows = $dbConnection->query($query);
+    if ($rows->rowCount() > 0) {
+        foreach ($rows as $row) {
+            return $row['ratePM'];
+        }
+    }
+}
+
 function calculateUsedHours($userId, $month)
 {
     $startDate = date('Y-m-01 00:00:00');
@@ -321,10 +333,11 @@ function getActiveUsersAdmins()
     return $dbConnection->query($query);
 }
 
-function changeUserRate($userId, $rate)
+function changeUserRate($userId, $rate, $ratePM)
 {
     $dbConnection = dbConnect();
-    $query = "UPDATE users SET rate='$rate' WHERE userId='$userId'";
+    $query = "UPDATE users SET rate='$rate', ratePM='$ratePM' WHERE userId='$userId'";
+    // $query = "UPDATE users SET (rate,ratePM) VALUES ('$rate', '$ratePM') WHERE userId='$userId'";
     $dbConnection->query($query);
 }
 

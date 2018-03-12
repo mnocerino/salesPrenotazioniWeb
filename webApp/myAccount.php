@@ -41,7 +41,14 @@ if (!isUserLoggedIn()) {
             <br>
             <h3>Utente: <?php echo getUserCompleteName(getUserIdFromSession()); ?></h3> <br>
             Ore disponibili da contratto: <?php echo getUserAllowance(getUserIdFromSession()); ?><br>
-            Costo orario: <?php echo getUserRate(getUserIdFromSession()) . "\xE2\x82\xAc"; ?><br>
+            <?php
+            $userRateAM = getUserRate(getUserIdFromSession());
+            $userRatePM = getUserRatePM(getUserIdFromSession());
+            if ($userRateAM == $userRatePM) : ?>
+                Costo orario: <?php echo $userRateAM . "\xE2\x82\xAc"; ?><br>
+            <?php else: ?>
+                Costo orario dalle 8 alle 14: <?php echo $userRateAM . " \xE2\x82\xAc" ?>. <br>
+                Costo orario dalle 14 alle 21: <?php echo $userRatePM . " \xE2\x82\xAc"; endif; ?><br>
             Tempo rimanente per il mese in
             corso: <?php echo getReadableRemainingTime(getUserIdFromSession(), date('Y-m-d', strtotime('now'))); ?>
             <br>

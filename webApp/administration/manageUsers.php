@@ -97,7 +97,8 @@ $deactivatedUsers = getDeactivatedUsers();
                     <td>Cognome</td>
                     <td>Nome</td>
                     <td>Email</td>
-                    <td>Costo orario</td>
+                    <td>Costo AM</td>
+                    <td>Costo PM</td>
                     <td>Ore mensili</td>
                     <td>Ultimo accesso</td>
                     <td>Operazioni</td>
@@ -112,6 +113,7 @@ $deactivatedUsers = getDeactivatedUsers();
                     echo "<td>" . $activeUser['name'] . "</td>";
                     echo "<td>" . $activeUser['mail'] . "</td>";
                     echo "<td>" . $activeUser['rate'] . "</td>";
+                    echo "<td>" . $activeUser['ratePM'] . "</td>";
                     echo "<td>" . $activeUser['allowance'] . "</td>";
                     echo "<td>" . $activeUser['lastLogin'] . "</td>";
                     echo "<td>";

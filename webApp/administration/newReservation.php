@@ -84,7 +84,6 @@ if (!isUserLoggedIn()) {
         <div class="col-4">
             <p class="lead text-center">Regole</p>
             <ul>
-                <li>E' possibile prenotare le sale fino a 10 giorni</li>
                 <li>Le prenotazioni possono essere cancellate fino a 48 prima della prenotazione stessa</li>
             </ul>
         </div>
