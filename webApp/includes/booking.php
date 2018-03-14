@@ -119,6 +119,17 @@ function getUserBookings($userId)
     else return null;
 }
 
+function getUserBookingsOnMonth($userId, $month)
+{
+    $startDate = date('Y-m-01 00:00:00');
+    //$endDate = date('Y-m-t 23:59:59', strtotime($month));
+    $dbConnection = dbConnect();
+    $query = "SELECT * FROM bookings where userId='$userId' and start >= '$startDate' and status=1 ORDER BY start";
+    $rows = $dbConnection->query($query);
+    if ($rows->rowCount() > 0) return $rows;
+    else return null;
+}
+
 function calculateBookingCost($userId, $start, $end)
 {
     $totalCost = 0.0;
@@ -132,8 +143,6 @@ function calculateBookingCost($userId, $start, $end)
     $endH = date('H', strtotime($end));
     $addPM = false;
     $addAM = false;
-    //$minutes = round(abs(strtotime($end) - strtotime($start)) / 60, 2); //THIS RETURNS NUM. OF MINUTES
-    //TODO: Generate all cases and calculate prices accordingly. Rates changes at 2PM. Round everything at 30 minutes. (15->30 min, 45-> 1h.)
     if ($endH >= 14 && $start < $timeat14) {
         $amMinutes = round(abs(strtotime($timeat14) - strtotime($start)) / 60 / 60, 2);
         $whole = floor($amMinutes);
@@ -143,7 +152,6 @@ function calculateBookingCost($userId, $start, $end)
             //$amMinutes=$amMinutes+0.25;
         }
         $amCost = floatval($amMinutes) * floatval($userRateAM);
-
         $pmMinutes = round(abs(strtotime($end) - strtotime($timeat14)) / 60 / 60, 2);
         $whole = floor($pmMinutes);
         $decimals = $pmMinutes - $whole;
