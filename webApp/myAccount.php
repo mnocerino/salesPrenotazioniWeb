@@ -49,8 +49,20 @@ if (!isUserLoggedIn()) {
             <?php else: ?>
                 Costo orario dalle 8 alle 14: <?php echo $userRateAM . " \xE2\x82\xAc" ?>. <br>
                 Costo orario dalle 14 alle 21: <?php echo $userRatePM . " \xE2\x82\xAc"; endif; ?><br>
-            Tempo rimanente per il mese in
-            corso: <?php echo getReadableRemainingTime(getUserIdFromSession(), date('Y-m-d', strtotime('now'))); ?>
+            <?php
+            $remainingSeconds = calculateRemainingSeconds(getUserIdFromSession(), date('Y-m-d', strtotime('now')));
+            if ($remainingSeconds < 0): ?>
+                <?php
+                echo "Hai utilizzato: " . secToHR(abs($remainingSeconds)) . " in più rispetto al tuo monte ore.";
+                ?>
+            <?
+            else:
+                ?>
+                Tempo rimanente per il mese in
+                corso: <?php echo getReadableRemainingTime(getUserIdFromSession(), date('Y-m-d', strtotime('now')));
+
+            endif;
+            ?>
             <br>
             <a href="changePassword.php" class="btn btn-primary" role="button">Cambia la tua password</a>
         </div>

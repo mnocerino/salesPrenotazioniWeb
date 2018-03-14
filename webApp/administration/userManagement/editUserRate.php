@@ -73,7 +73,7 @@ if (isset($_GET['userId'])):
                             l'utente.
                         </small>
                     </div>
-                    <button type="submit" class="btn btn-primary" id="submit">Modifica il monte ore</button>
+                    <button type="submit" class="btn btn-primary" id="submit">Modifica il costo orario</button>
                 </form>
             </div>
         </div>

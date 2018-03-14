@@ -239,8 +239,10 @@ function getUsedTimes($userId, $monthDate)
 function registerNewUser($name, $surname, $mail, $password)
 {
     $dbConnection = dbConnect();
-    $name = filter_var(trim($name), FILTER_SANITIZE_STRING);
-    $surname = filter_var(trim($surname), FILTER_SANITIZE_STRING);
+    $name = addslashes(filter_var(trim($name), FILTER_SANITIZE_STRING));
+    $name = str_replace("&#39;", "\'", $name);
+    $surname = addslashes(filter_var(trim($surname), FILTER_SANITIZE_STRING));
+    $surname = str_replace("&#39;", "\'", $surname);
     $mail = filter_var(trim($mail), FILTER_SANITIZE_EMAIL);
     if (!checkIfUserExists($mail)) {
         $query = "INSERT INTO users (name, surname, mail, password) VALUES ('$name' , '$surname', '$mail', '$password')";

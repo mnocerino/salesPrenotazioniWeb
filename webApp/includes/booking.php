@@ -21,7 +21,7 @@ function newBooking($userId, $start, $end, $roomId, $price)
     }
 
     //Check if user has allowance hours
-    if (!isUserAdmin($userId)) {
+    if (!isUserAdmin(getUserIdFromSession())) {
 
         if (calculateRemainingSeconds(getUserIdFromSession(), date('Y-m-d', $requestedBooking)) < $requested) {
             header('Location: newReservation.php?error=notEnoughAllowance');
@@ -122,7 +122,21 @@ function getBookingInfo($bookingId)
 
 function getUserBookings($userId)
 {
+    //$startDate= "2018-01-01 00:00:00";
     $startDate = date('Y-m-01 00:00:00');
+    //$endDate = date('Y-m-t 23:59:59', strtotime($month));
+    $dbConnection = dbConnect();
+    $query = "SELECT * FROM bookings where userId='$userId' and start >= '$startDate' and status=1 ORDER BY start";
+    $rows = $dbConnection->query($query);
+    if ($rows->rowCount() > 0) return $rows;
+    else return null;
+}
+
+function getAllUserBookings($userId)
+{
+    $startDate = "2018-01-01 00:00:00";
+    $startDate = date('Y-01-01 00:00:00');
+    //$startDate = date('Y-m-01 00:00:00');
     //$endDate = date('Y-m-t 23:59:59', strtotime($month));
     $dbConnection = dbConnect();
     $query = "SELECT * FROM bookings where userId='$userId' and start >= '$startDate' and status=1 ORDER BY start";
@@ -200,4 +214,25 @@ function calculateBookingCost($userId, $start, $end)
     }
     $totalCost = $totalCost + $pmCost + $amCost;
     return $totalCost;
+}
+
+function getCSV()
+{
+    $dbConnection = dbConnect();
+    $query = "SELECT bookingId,name,surname,start,end,price,roomName from bookings INNER JOIN users USING(userId) INNER JOIN rooms USING (roomId)";
+    $rows = $dbConnection->query($query);
+    if ($rows->rowCount() > 0) {
+        $fp = fopen('php://output', 'w');
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="sales.csv"');
+        header('Pragma: no-cache');
+        header('Expires: 0');
+
+        $csvHeader = array('id', 'nome', 'cognome', 'inizio', 'fine', 'prezzo', 'sala');
+        fputcsv($fp, $csvHeader, ";", '"');
+        while ($row = $rows->fetch(PDO::FETCH_NUM)) {
+            fputcsv($fp, $row, ";", '"'); // push the rest
+        }
+    } else return null;
+
 }

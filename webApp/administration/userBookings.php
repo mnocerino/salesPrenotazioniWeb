@@ -49,12 +49,13 @@ if (isset($_POST['userID']) && $_POST['userID'] != '') {
     </div>
     <div class="row"><br></div>
     <?php require_once '../includes/adminMenu.php'; ?>
-    <br><br><br>
+    <br>
     <?php
     if ($userIsSet) : ?>
         <div class="row">
             <div class="col-lg-auto text-center mx-auto">
                 <table class="table table-striped table-bordered text-center">
+                    <h3>Prenotazioni di: <?php echo getUserCompleteName($userID) ?></h3>
                     <thead>
                     <tr>
                         <td>ID</td>
@@ -68,25 +69,28 @@ if (isset($_POST['userID']) && $_POST['userID'] != '') {
                     </thead>
                     <tbody>
                     <?php
-                    $userBookings = getUserBookings($userID);
-                    foreach ($userBookings as $booking) {
-                        $start = strtotime($booking['start']);
-                        $startDay = date('Y-m-d', $start);
-                        $startTime = date('H:i', $start);
-                        $end = strtotime($booking['end']);
-                        $endTime = date('H:i', $end);
-                        $roomName = getRoomName($booking['roomId']);
-                        echo "<tr>";
-                        echo "<td>" . $booking['bookingId'] . "</td>";
-                        echo "<td>" . $startDay . "</td>";
-                        echo "<td>" . $startTime . "</td>";
-                        echo "<td>" . $endTime . "</td>";
-                        echo "<td>" . $roomName . "</td>";
-                        echo "<td>" . $booking['price'] . "</td>";
-                        echo "<td>";
-                        echo "<form action='changePrice.php' method='post'><input type='number' hidden value='" . $booking['bookingId'] . "'name='booking'><button action='submit'>Cambia prezzo</button></form>";
-                        echo "</td>";
-                        echo "</tr>";
+                    //TODO: make a search year-based
+                    $userBookings = getAllUserBookings($userID);
+                    if ($userBookings != null) {
+                        foreach ($userBookings as $booking) {
+                            $start = strtotime($booking['start']);
+                            $startDay = date('Y-m-d', $start);
+                            $startTime = date('H:i', $start);
+                            $end = strtotime($booking['end']);
+                            $endTime = date('H:i', $end);
+                            $roomName = getRoomName($booking['roomId']);
+                            echo "<tr>";
+                            echo "<td>" . $booking['bookingId'] . "</td>";
+                            echo "<td>" . $startDay . "</td>";
+                            echo "<td>" . $startTime . "</td>";
+                            echo "<td>" . $endTime . "</td>";
+                            echo "<td>" . $roomName . "</td>";
+                            echo "<td>" . $booking['price'] . "</td>";
+                            echo "<td>";
+                            echo "<form action='changePrice.php' method='post'><input type='number' hidden value='" . $booking['bookingId'] . "'name='booking'><button action='submit'>Cambia prezzo</button></form>";
+                            echo "</td>";
+                            echo "</tr>";
+                        }
                     }
                     ?>
                     </tbody>
@@ -94,6 +98,13 @@ if (isset($_POST['userID']) && $_POST['userID'] != '') {
             </div>
         </div>
     <?php else: ?>
+        <div class="row">
+            <div class="col-lg-auto text-center mx-auto">
+                <a href="downloadCSV.php">
+                    <button class="btn btn-info">Scarica tutte le prenotazioni</button>
+                </a><br><br><br>
+            </div>
+        </div>
         <div class="row">
             <div class="col-lg-auto text-center mx-auto">
                 <table class="table table-striped table-bordered text-center">
@@ -107,6 +118,7 @@ if (isset($_POST['userID']) && $_POST['userID'] != '') {
                     </thead>
                     <tbody>
                     <?php
+                    //TODO: download a csv file with all bookings
                     foreach ($activeUsers as $user) {
                         echo "<tr>";
                         echo "<td>" . $user['userId'] . "</td>";
@@ -114,7 +126,7 @@ if (isset($_POST['userID']) && $_POST['userID'] != '') {
                         echo "<td>" . $user['name'] . "</td>";
                         echo "<td>";
                         echo "<form action='userBookings.php' method='post'><input type='number' hidden value='" . $user['userId'] . "' name='userID'><button action='submit'>Visualizza</button></form>";
-                        echo "<form action='userBilling.php' method='post'><input type='number' hidden value='" . $user['userId'] . "' name='userID'><button action='submit'>Costi</button></form>";
+                        echo "<form action='userBilling.php' method='post'><input type='number' hidden value='" . $user['userId'] . "' name='userID'><button action='submit'>Resoconto</button></form>";
                         echo "</td>";
                         echo "</tr>";
                     }
