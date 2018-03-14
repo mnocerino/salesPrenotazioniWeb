@@ -118,7 +118,6 @@ if (isset($_POST['userID']) && $_POST['userID'] != '') {
                     </thead>
                     <tbody>
                     <?php
-                    //TODO: download a csv file with all bookings
                     foreach ($activeUsers as $user) {
                         echo "<tr>";
                         echo "<td>" . $user['userId'] . "</td>";

@@ -24,8 +24,12 @@ if (isset ($_POST['bookingId']) && isset($_POST['newPrice'])) {
     header('Location: userBookings.php');
     die();
 }
-
+$oldPrice = 0.0;
 if (isset($_POST['booking'])):
+    $booking = getBookingInfo($_POST['booking']);
+    foreach ($booking as $book) {
+        $oldPrice = $book['price'];
+    }
     ?>
 
     <!DOCTYPE html>
@@ -58,7 +62,7 @@ if (isset($_POST['booking'])):
                         <label for="newPrice">Costo</label>
                         <input type="number" class="form-control" id="newPrice" name="newPrice"
                                aria-describedby="newPriceHelp"
-                               value="<?php ?>" required step="0.01" min="0">
+                               value="<?php echo $oldPrice; ?>" required step="0.01" min="0">
                         <small id="newPriceHelp" class="form-text text-muted">Inserisci il nuovo costo.
                         </small>
                     </div>
