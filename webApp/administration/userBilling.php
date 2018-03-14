@@ -49,7 +49,6 @@ $userID = $_POST['userID'];
     <div class="row"><br></div>
     <?php require_once '../includes/adminMenu.php'; ?>
     <br><br><br>
-    <!--TODO: Show all months, calculate total cost of active bookings. -->
     <div class="row">
         <div class="col-lg-auto text-center mx-auto">
             <h3>Utente: <?php echo getUserCompleteName($userID) ?></h3>

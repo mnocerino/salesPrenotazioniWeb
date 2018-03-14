@@ -52,7 +52,6 @@ if (isset($_POST['userID']) && $_POST['userID'] != '') {
     <br><br><br>
     <?php
     if ($userIsSet) : ?>
-        <!--TODO: SHOW ALL BOOKINGS FROM THE USER SELECTED, MAKE POSSIBLE TO CHANGE THE PRICE OF THE BOOKING -->
         <div class="row">
             <div class="col-lg-auto text-center mx-auto">
                 <table class="table table-striped table-bordered text-center">

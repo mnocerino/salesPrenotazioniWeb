@@ -21,9 +21,12 @@ function newBooking($userId, $start, $end, $roomId, $price)
     }
 
     //Check if user has allowance hours
-    if (calculateRemainingSeconds(getUserIdFromSession(), date('Y-m-d', $requestedBooking)) < $requested) {
-        header('Location: newReservation.php?error=notEnoughAllowance');
-        die();
+    if (!isUserAdmin($userId)) {
+
+        if (calculateRemainingSeconds(getUserIdFromSession(), date('Y-m-d', $requestedBooking)) < $requested) {
+            header('Location: newReservation.php?error=notEnoughAllowance');
+            die();
+        }
     }
     //Check if start date is in the future
     if ($requestedBooking < $now) {

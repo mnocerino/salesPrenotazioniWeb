@@ -33,7 +33,7 @@ if (!isUserLoggedIn()) {
     echo $room;
     echo "<br>";
     echo(strtotime($queryStart));
-    $booked = newBooking($user, $queryStart, $queryEnd, $room);
+    $booked = newBooking($user, $queryStart, $queryEnd, $room, calculateBookingCost($user, $queryStart, $queryEnd));
     $header = "Location: index.php";
     header($header);
 } else header('Location newReservation.php?error=missingData');
