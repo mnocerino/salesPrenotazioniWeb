@@ -53,7 +53,8 @@ function newBooking($userId, $start, $end, $roomId, $price)
         header('Location: newReservation.php?error=alreadyBooked');
         die();
     } else {
-        $query = "INSERT INTO bookings  VALUES (NULL, '$roomId', '$userId', '1', '$start', '$end','$price')";
+        $nowQuery = date('Y-m-d H:i:s');
+        $query = "INSERT INTO bookings  VALUES (NULL, '$roomId', '$userId', '1', '$start', '$end','$price', '$nowQuery')";
         $rows = $dbConnection->query($query);
         $query = "SELECT bookingId from bookings WHERE userid='$userId' AND roomId = '$roomId' AND start = '$start' AND end = '$end' LIMIT 1";
         echo $query;
@@ -75,6 +76,14 @@ function deleteBooking($bookingId)
         $rows = $dbConnection->query($query);
         return true;
     }
+}
+
+function changePrice($bookingId, $newPrice)
+{
+    $dbConnection = dbConnect();
+    $query = "UPDATE bookings SET price='$newPrice' WHERE bookingId='$bookingId'";
+    $rows = $dbConnection->query($query);
+    return true;
 }
 
 function checkIfUserCanDelete($bookingId)
@@ -121,10 +130,10 @@ function getUserBookings($userId)
 
 function getUserBookingsOnMonth($userId, $month)
 {
-    $startDate = date('Y-m-01 00:00:00');
-    //$endDate = date('Y-m-t 23:59:59', strtotime($month));
+    $startDate = date('Y-m-01 00:00:00', strtotime($month));
+    $endDate = date('Y-m-t 23:59:59', strtotime($month));
     $dbConnection = dbConnect();
-    $query = "SELECT * FROM bookings where userId='$userId' and start >= '$startDate' and status=1 ORDER BY start";
+    $query = "SELECT * FROM bookings where userId='$userId' and start >= '$startDate' and end<='$endDate' and status=1 ORDER BY start";
     $rows = $dbConnection->query($query);
     if ($rows->rowCount() > 0) return $rows;
     else return null;

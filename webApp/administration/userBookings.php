@@ -85,7 +85,7 @@ if (isset($_POST['userID']) && $_POST['userID'] != '') {
                         echo "<td>" . $roomName . "</td>";
                         echo "<td>" . $booking['price'] . "</td>";
                         echo "<td>";
-                        echo "<form action='changPrice.php' method='post'><input type='number' hidden value='" . $booking['bookingId'] . "'name='booking'><button action='submit'>Cambia prezzo</button></form>";
+                        echo "<form action='changePrice.php' method='post'><input type='number' hidden value='" . $booking['bookingId'] . "'name='booking'><button action='submit'>Cambia prezzo</button></form>";
                         echo "</td>";
                         echo "</tr>";
                     }
@@ -115,6 +115,7 @@ if (isset($_POST['userID']) && $_POST['userID'] != '') {
                         echo "<td>" . $user['name'] . "</td>";
                         echo "<td>";
                         echo "<form action='userBookings.php' method='post'><input type='number' hidden value='" . $user['userId'] . "' name='userID'><button action='submit'>Visualizza</button></form>";
+                        echo "<form action='userBilling.php' method='post'><input type='number' hidden value='" . $user['userId'] . "' name='userID'><button action='submit'>Costi</button></form>";
                         echo "</td>";
                         echo "</tr>";
                     }

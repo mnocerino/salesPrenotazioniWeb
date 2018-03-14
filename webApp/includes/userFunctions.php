@@ -186,7 +186,7 @@ function getUserRatePM($userId)
 
 function calculateUsedHours($userId, $month)
 {
-    $startDate = date('Y-m-01 00:00:00');
+    $startDate = date('Y-m-01 00:00:00', strtotime($month));
     $endDate = date('Y-m-t 00:00:00', strtotime($month));
 
     $dbConnection = dbConnect();
@@ -222,6 +222,18 @@ function secToHR($seconds)
 function getReadableRemainingTime($userId, $monthDate)
 {
     return secToHR(calculateRemainingSeconds($userId, $monthDate));
+}
+
+function calculateUsedSeconds($userId, $monthDate)
+{
+    $startDate = date("Y-m-01 00:00:00", strtotime($monthDate));
+    $used = calculateUsedHours($userId, $startDate);
+    return $used;
+}
+
+function getUsedTimes($userId, $monthDate)
+{
+    return secToHR(calculateUsedSeconds($userId, $monthDate));
 }
 
 function registerNewUser($name, $surname, $mail, $password)

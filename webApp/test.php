@@ -10,12 +10,8 @@ require_once 'includes/database.php';
 require_once 'includes/userFunctions.php';
 require_once 'includes/booking.php';
 
-echo getUserRate(13) . '<br>';
-echo getUserRatePM(13);
-
-echo '<br>';
-$start = '2018-03-02 13:15:00';
-$end = '2018-03-02 14:15:00';
-echo $start . '<br>' . $end . '<br>';
-echo calculateBookingCost(13, $start, $end);
+$bookings = getUserBookingsOnMonth(13, "2018-03-23");
+foreach ($bookings as $booking) {
+    echo "ciao<br>";
+}
 echo '<br>Fine dello script';
