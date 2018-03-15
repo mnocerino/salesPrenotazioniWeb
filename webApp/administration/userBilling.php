@@ -90,7 +90,7 @@ if (isset($_POST['year'])) {
                         foreach ($userBookings as $booking) {
                             $totalCost = (float)$totalCost + (float)$booking['price'];
                             $totalBookings++;
-                            $grandTotal = $grandTotal + $totalCost;
+                            $grandTotal = $grandTotal + $booking['price'];
                         }
                     }
                     echo "<tr>";

@@ -187,14 +187,13 @@ function getUserRatePM($userId)
 function calculateUsedHours($userId, $month)
 {
     $startDate = date('Y-m-01 00:00:00', strtotime($month));
-    $endDate = date('Y-m-t 00:00:00', strtotime($month));
+    $endDate = date('Y-m-t 23:59:59', strtotime($month));
 
     $dbConnection = dbConnect();
     $query = "SELECT * FROM bookings where userId='$userId' and start BETWEEN '$startDate' AND '$endDate' and status=1";
     $rows = $dbConnection->query($query);
     $usedSeconds = 0;
     foreach ($rows as $row) {
-
         $date1 = new DateTime($row['start']);
         $date2 = new DateTime($row['end']);
         $diffInSeconds = $date2->getTimestamp() - $date1->getTimestamp();
@@ -224,16 +223,18 @@ function getReadableRemainingTime($userId, $monthDate)
     return secToHR(calculateRemainingSeconds($userId, $monthDate));
 }
 
+//THIS IS NOT USEFUL!
+/*
 function calculateUsedSeconds($userId, $monthDate)
 {
     $startDate = date("Y-m-01 00:00:00", strtotime($monthDate));
     $used = calculateUsedHours($userId, $startDate);
     return $used;
 }
-
+*/
 function getUsedTimes($userId, $monthDate)
 {
-    return secToHR(calculateUsedSeconds($userId, $monthDate));
+    return secToHR(calculateUsedHours($userId, $monthDate));
 }
 
 function registerNewUser($name, $surname, $mail, $password)

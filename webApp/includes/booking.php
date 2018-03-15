@@ -223,8 +223,9 @@ function getCSV()
     $rows = $dbConnection->query($query);
     if ($rows->rowCount() > 0) {
         $fp = fopen('php://output', 'w');
+        $filenameString = 'Content-Disposition: attachment; filename="salesPrenotazioni ' . date('Y-m-d H:i') . '.csv"';
         header('Content-Type: text/csv');
-        header('Content-Disposition: attachment; filename="sales.csv"');
+        header($filenameString);
         header('Pragma: no-cache');
         header('Expires: 0');
 

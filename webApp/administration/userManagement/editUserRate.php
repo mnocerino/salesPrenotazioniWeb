@@ -67,7 +67,7 @@ if (isset($_GET['userId'])):
 
                         <label for="userRate">Costo orario PM</label>
                         <input type="number" class="form-control" id="userRatePM" name="userRatePM"
-                               aria-describedby="userAllowanceHelp" value="<?php echo getUserRate($_GET['userId']) ?>"
+                               aria-describedby="userAllowanceHelp" value="<?php echo getUserRatePM($_GET['userId']) ?>"
                                required step="0.01" min="0">
                         <small id="userRatePMHelp" class="form-text text-muted">Inserisci il costo orario PM per
                             l'utente.
