@@ -219,7 +219,7 @@ function calculateBookingCost($userId, $start, $end)
 function getCSV()
 {
     $dbConnection = dbConnect();
-    $query = "SELECT bookingId,name,surname,start,end,price,roomName from bookings INNER JOIN users USING(userId) INNER JOIN rooms USING (roomId) WHERE bookings.status=1";
+    $query = "SELECT bookingId,name,surname,start,end,price,roomName,users.status from bookings INNER JOIN users USING(userId) INNER JOIN rooms USING (roomId) WHERE bookings.status=1";
     $rows = $dbConnection->query($query);
     if ($rows->rowCount() > 0) {
         $fp = fopen('php://output', 'w');
@@ -228,7 +228,7 @@ function getCSV()
         header('Pragma: no-cache');
         header('Expires: 0');
 
-        $csvHeader = array('id', 'nome', 'cognome', 'inizio', 'fine', 'prezzo', 'sala');
+        $csvHeader = array('id', 'nome', 'cognome', 'inizio', 'fine', 'prezzo', 'sala', 'utente attivo');
         fputcsv($fp, $csvHeader, ";", '"');
         while ($row = $rows->fetch(PDO::FETCH_NUM)) {
             fputcsv($fp, $row, ";", '"'); // push the rest
