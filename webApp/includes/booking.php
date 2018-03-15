@@ -219,7 +219,7 @@ function calculateBookingCost($userId, $start, $end)
 function getCSV()
 {
     $dbConnection = dbConnect();
-    $query = "SELECT bookingId,name,surname,start,end,price,roomName from bookings INNER JOIN users USING(userId) INNER JOIN rooms USING (roomId)";
+    $query = "SELECT bookingId,name,surname,start,end,price,roomName from bookings INNER JOIN users USING(userId) INNER JOIN rooms USING (roomId) WHERE bookings.status=1";
     $rows = $dbConnection->query($query);
     if ($rows->rowCount() > 0) {
         $fp = fopen('php://output', 'w');

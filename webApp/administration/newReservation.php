@@ -189,7 +189,7 @@ if (!isUserLoggedIn()) {
                         <label for="user">Utente:</label>
                         <select class="form-control" name="user" id="user" aria-describedby="user">
                             <?php
-                            $query = "SELECT userId,name,surname FROM users ORDER BY surname";
+                            $query = "SELECT userId,name,surname FROM users WHERE status=1 ORDER BY surname";
                             $rows = $dbConnection->query($query);
                             foreach ($rows as $row) {
                                 echo "<option value=\"" . $row['userId'] . "\">" . $row['surname'] . " " . $row['name'] . "</option>";
